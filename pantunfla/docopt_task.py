@@ -27,6 +27,7 @@ from keras.metrics import Accuracy
 from keras.optimizers import Adam
 import tensorflow as tf
 from keras.applications import ResNet152V2, ResNet50
+import time
 
 
 print("0.0")
@@ -63,11 +64,11 @@ if __name__ == '__main__':
     acc = Accuracy()
     print("5")
     # # # Run the training job
-    try:
-        zipfiles = dppvm.extract_zips(dppvm.zip_down_dir)
-        print("se descargo")
-    except:
-        print("no se descargo ni madres")
+    # try:
+    #     zipfiles = dppvm.extract_zips(dppvm.zip_down_dir)
+    #     print("se descargo")
+    # except:
+    #     print("no se descargo ni madres")
     DATA = Path("download")
     DEST = dppvm.DEST
     print("6")
