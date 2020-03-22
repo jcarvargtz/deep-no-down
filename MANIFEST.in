@@ -1,0 +1,3 @@
+include pantunfla/blazeface.pth
+include pantunfla/anchors.npy
+include pantunfla/curl_get.sh
