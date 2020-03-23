@@ -99,7 +99,7 @@ if __name__ == '__main__':
     path_video_files = dppvm.DEST/'videos'
     path_meta = dppvm.DEST/'metadata'/'all_meta.json'
     for meta in os.listdir(DEST /"metadata"):
-        if Path(DEST/'metadata'/'all_meta.json').is_file() == False:
+        if Path(DEST/'metadata'/'all_meta.csv').is_file() == False:
             df_meta = pd.read_json(DEST /"metadata"/meta)
             df_meta['zip_no'] = meta
             all_meta_df = df_meta.copy()
@@ -107,10 +107,10 @@ if __name__ == '__main__':
             print("all")
         else:
             df_meta = pd.read_json(DEST /"metadata"/meta)
-            df_meta['zip_no'] = DEST /"metadata"/meta
-            all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.csv')
+            df_meta['zip_no'] = str(DEST /"metadata"/meta)
+            all_meta_df = pd.read_csv(DEST/'metadata'/'all_meta.csv')
             all_meta = pd.concat([all_meta_df,df_meta],axis=0)
-            all_meta_df.to_json(DEST/'metadata'/'all_meta.csv')
+            all_meta_df.to_csv(DEST/'metadata'/'all_meta.csv')
             print(meta)
     all_meta["path"] = all_meta.index.map(lambda x: DEST/'metadata'/x)
     all_meta.to_json(DEST/'metadata'/'all_meta.json')
