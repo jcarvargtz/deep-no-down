@@ -882,7 +882,7 @@ def Process_video(video_file_path, n_frames, dims, channels):
     return X_1, X_2, X_3
 
 
-class DataGenerator(Sequence):
+class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
     def __init__(self, list_IDs, video_path, meta, video_reader=VideoReader(),
     to_fit=True, batch_size=4, dim=(224, 224),
@@ -966,7 +966,7 @@ class DataGenerator(Sequence):
         return y
 
 
-class Data_generator_train(Sequence):
+class Data_generator_train(tf.keras.utils.Sequence):
     'Generates data for Keras'
     def __init__(self, list_IDs, path_to_videos_dir, meta, video_reader=VideoReader(),
     to_fit=True, batch_size=32, dim=(224, 224),
