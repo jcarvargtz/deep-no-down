@@ -127,7 +127,7 @@ if __name__ == '__main__':
     mirrored_strategy = tf.distribute.MirroredStrategy()
     with mirrored_strategy.scope():
         model =  model = mdl.make_model(n_frames,dims,channels)
-    model = tf.keras.utils.multi_gpu_model(model,2)
+    # model = tf.keras.utils.multi_gpu_model(model,2)
     model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
     model.summary()
     print("11")
