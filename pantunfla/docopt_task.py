@@ -127,5 +127,5 @@ if __name__ == '__main__':
     model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
     print("11")
     model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=-1,verbose=2,epochs=500)
-    model.fit_generator
+    
     # Make_predicctions
