@@ -80,7 +80,7 @@ if __name__ == '__main__':
     start = int(time.time())
     with multiprocessing.Pool() as pool: # use all cores available
         pool.map(dppvm.extract_zip, zipfiles)
-    # logging.info(f"Extracted all zip files in {int(time.time()) - start} seconds!")
+    logging.info(f"Extracted all zip files in {int(time.time()) - start} seconds!")
     print("8")       
     try:
         os.mkdir(DEST/"captures")
