@@ -103,7 +103,7 @@ def make_model(n_frames,dims,channels):
     mod_4 = tf.keras.models.Model(inputs=[mod_1.input,mod_2.input], outputs=x4)#,mod_3.input
     return mod_4
 
-make_model(30,(224,224),3).summary()
+# make_model(30,(224,224),3).summary()
 # # Create callbacks, metrics, loss, and Generator # #
 # Callbacks
 # saved_model_path = "weights-improvement-{epoch:02d}-{val_accuracy:.2f}.hdf5"
