@@ -103,14 +103,15 @@ if __name__ == '__main__':
             df_meta = pd.read_json(DEST /"metadata"/meta).T
             df_meta['zip_no'] = meta
             all_meta_df = df_meta.copy()
-            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+            all_meta_df.T.to_json(DEST/'metadata'/'all_meta.json')
         else:
             df_meta = pd.read_json(DEST /"metadata"/meta).T
             df_meta['zip_no'] = DEST /"metadata"/meta
             all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.json')
             all_meta = pd.concat([all_meta_df,df_meta],axis=0)
-            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+            all_meta_df.T.to_json(DEST/'metadata'/'all_meta.json')
     all_meta["path"] = [DEST /'metadata'/x for x in all_meta.index]
+    all_meta = pd.read_json(DEST/'metadata/')
     # Train the model
     print("10")
     val_msk = int(len(all_meta) * 0.9)
