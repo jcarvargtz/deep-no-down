@@ -103,14 +103,14 @@ if __name__ == '__main__':
             df_meta = pd.read_json(DEST /"metadata"/meta)
             df_meta['zip_no'] = meta
             all_meta_df = df_meta.copy()
-            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+            all_meta_df.to_csv(DEST/'metadata'/'all_meta.csv')
             print("all")
         else:
             df_meta = pd.read_json(DEST /"metadata"/meta)
             df_meta['zip_no'] = DEST /"metadata"/meta
-            all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.json')
+            all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.csv')
             all_meta = pd.concat([all_meta_df,df_meta],axis=0)
-            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+            all_meta_df.to_json(DEST/'metadata'/'all_meta.csv')
             print(meta)
     all_meta["path"] = all_meta.index.map(lambda x: DEST/'metadata'/x)
     all_meta.to_json(DEST/'metadata'/'all_meta.json')
