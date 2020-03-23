@@ -104,13 +104,15 @@ if __name__ == '__main__':
             df_meta['zip_no'] = meta
             df_meta["id"] = df_meta.index
             all_meta_df = df_meta.copy()
+            all_meta_df.reset_index(inplace=True)
             all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
             print("all")
         else:
             df_meta = pd.read_json(DEST /"metadata"/meta)
             df_meta['zip_no'] = str(DEST /"metadata"/meta)
+            df_meta.reset_index(inplace=True)
             all_meta_df = pd.read_csv(DEST/'metadata'/'all_meta.json')
-            all_meta_df.append(df_meta)
+            all_meta_df.append(df_meta,ignore_index=True)
             all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
             print(meta)
     all_meta_df["path"] = all_meta_df.index.apply(lambda x: DEST/'video'/x)
