@@ -81,11 +81,11 @@ def extract_zip(zipfile: Union[str, Path])->None:
         df_meta.to_json(meta_fn)
         all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
     else:
-        all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.json')
+        
         df_meta = pd.read_json(meta_fn).T
         df_meta['zip_no'] = zip_no
-
-        all_meta_df.concat([all_meta_df,df_meta],axis=0)
+        all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.json')
+        all_meta = pd.concat([all_meta_df,df_meta],axis=0)
         df_meta.to_json(meta_fn)
         all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
 
