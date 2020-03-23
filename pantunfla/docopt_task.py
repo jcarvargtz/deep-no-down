@@ -125,7 +125,7 @@ if __name__ == '__main__':
     gener = ppf.DataGenerator(all_meta[:val_msk].index,video_path=all_meta[:val_msk].path,meta=all_meta[:val_msk])
     val = ppf.DataGenerator(all_meta[val_msk:].index,video_path=all_meta[val_msk:],meta=all_meta[val_msk:])
     model = mdl.make_model(n_frames,dims,channels)
-    model = multi_gpu_model(model,2)
+    model = tf.keras.utils.multi_gpu_model(model,2)
     model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
     model.summary()
     print("11")
