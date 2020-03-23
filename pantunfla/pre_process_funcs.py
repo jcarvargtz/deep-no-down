@@ -28,7 +28,7 @@ import pkg_resources
 print("PyTorch version:", torch.__version__)
 print("CUDA version:", torch.version.cuda)
 print("cuDNN version:", torch.backends.cudnn.version())
-gpu = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+gpu = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 gpu
 
 pth_path = pkg_resources.resource_filename(__name__,'blazeface.pth')
