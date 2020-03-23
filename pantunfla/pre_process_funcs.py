@@ -926,7 +926,7 @@ class DataGenerator(Sequence):
         
         # Generate data
         X1, X2, X3 = self._generate_X(list_IDs_temp)
-        X = [X1,X2,X3]
+        X = [X1,X2]#,X3]
     
         if self.to_fit:
             y = self._generate_y(list_IDs_temp)
@@ -951,7 +951,7 @@ class DataGenerator(Sequence):
             X2[i,] = X[1]
             X3[i,] = X[2]
 
-        return X1,X2,X3
+        return X1,X2#,X3
  
     def _generate_y(self, list_IDs_temp):
         'Generates data containing batch_size masks'
@@ -1009,7 +1009,7 @@ class Data_generator_train(Sequence):
         
         # Generate data
         X1, X2, X3 = self._generate_X(list_IDs_temp)
-        X = [X1,X2,X3]
+        X = [X1,X2]#,X3]
     
         if self.to_fit:
             y = self._generate_y(list_IDs_temp)

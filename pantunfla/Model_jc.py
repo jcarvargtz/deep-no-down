@@ -43,7 +43,7 @@ from keras.applications import ResNet152V2, ResNet50
 def make_model(n_frames,dims,channels):
     input_1 = Input(shape=[ n_frames, *dims, channels], name="input_1") 
     input_2 = Input(shape=[ n_frames, *dims, channels], name="input_2")
-    input_3 = Input(shape=[ n_frames, *dims, channels], name="input_3")
+    # input_3 = Input(shape=[ n_frames, *dims, channels], name="input_3")
 
     # Create first part of the model
     x1 = TimeDistributed(ResNet50())(input_1)
@@ -79,28 +79,28 @@ def make_model(n_frames,dims,channels):
 
     # Create third part of model
     # x3 = TimeDistributed(ResNet50())(input_3)
-    x3 = TimeDistributed(Conv2D(32,kernel_size=(7,7)),name="3.1")(input_3)
-    x3 = Activation("relu", name="act3.1")(x3)
-    x3 = TimeDistributed(Conv2D(64,kernel_size=(5,5)),name="3.2")(x3)
-    x3 = Activation("relu", name="act3.2")(x3)
-    x3 = TimeDistributed(BatchNormalization(),name="3.2b")(x3)
-    x3 = TimeDistributed(Conv2D(128,kernel_size=(3,3)),name="3.3")(x3)
-    x3 = Activation("relu", name="act3.3")(x3)
-    x3 = TimeDistributed(BatchNormalization(),name="3.3b")(x3)
-    x3 = TimeDistributed(MaxPool2D(),name="3.3m")(x3)
-    x3 = TimeDistributed(Flatten())(x3)
-    x3 = LSTM(2,name="3.lstm")(x3)
-    x3 = BatchNormalization(name="3.lstmb")(x3)
-    mod_3 = Model(inputs=input_3, outputs = x3)
+    # x3 = TimeDistributed(Conv2D(32,kernel_size=(7,7)),name="3.1")(input_3)
+    # x3 = Activation("relu", name="act3.1")(x3)
+    # x3 = TimeDistributed(Conv2D(64,kernel_size=(5,5)),name="3.2")(x3)
+    # x3 = Activation("relu", name="act3.2")(x3)
+    # x3 = TimeDistributed(BatchNormalization(),name="3.2b")(x3)
+    # x3 = TimeDistributed(Conv2D(128,kernel_size=(3,3)),name="3.3")(x3)
+    # x3 = Activation("relu", name="act3.3")(x3)
+    # x3 = TimeDistributed(BatchNormalization(),name="3.3b")(x3)
+    # x3 = TimeDistributed(MaxPool2D(),name="3.3m")(x3)
+    # x3 = TimeDistributed(Flatten())(x3)
+    # x3 = LSTM(2,name="3.lstm")(x3)
+    # x3 = BatchNormalization(name="3.lstmb")(x3)
+    # mod_3 = Model(inputs=input_3, outputs = x3)
 
     # Join parts 1,2,3 of model
-    x4 =  concatenate([mod_1.output, mod_2.output, mod_3.output])
+    x4 =  concatenate([mod_1.output, mod_2.output])#, mod_3.output
     x4 = Dense(24, activation ="relu")(x4)
     x4 = Dense(24, activation ="relu")(x4)
     # x4 = Dense(24, activation ="relu")(x4)
     # x4 = Dense(24, activation ="relu")(x4)
     x4 = Dense(1,  activation ="sigmoid")(x4)
-    mod_4 = Model(inputs=[mod_1.input,mod_2.input,mod_3.input], outputs=x4)
+    mod_4 = Model(inputs=[mod_1.input,mod_2.input], outputs=x4)#,mod_3.input
     return mod_4
 
 # # Create callbacks, metrics, loss, and Generator # #
