@@ -110,7 +110,7 @@ if __name__ == '__main__':
             all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.json')
             all_meta = pd.concat([all_meta_df,df_meta],axis=0)
             all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
-    all_meta["path"] = [path_video_files + r'/' + x for x in all_meta.index]
+    all_meta["path"] = [DEST /'metadata'/x for x in all_meta.index]
     # Train the model
     print("10")
     val_msk = int(len(all_meta) * 0.9)
