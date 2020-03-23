@@ -7,7 +7,7 @@ Options:
 """
 from docopt import docopt
 
-import pantunfla.Model  # Your model.py file.
+import pantunfla.Model_jc as mdl # Your model.py file.
 import pantunfla.download_and_pre_process_for_virtual_machine as dppvm
 import pantunfla.pre_process_funcs as ppf
 from pathlib import Path
@@ -29,6 +29,7 @@ import tensorflow as tf
 from keras.applications import ResNet152V2, ResNet50
 import time
 import multiprocessing
+
 
 
 print("0.0")
@@ -122,7 +123,7 @@ if __name__ == '__main__':
     val_msk = int(len(all_meta) * 0.9)
     gener = ppf.DataGenerator(all_meta[:val_msk].index,video_path=all_meta[:val_msk].path,meta=all_meta[:val_msk])
     val = ppf.DataGenerator(all_meta[val_msk:].index,video_path=all_meta[val_msk:],meta=all_meta[val_msk:])
-    model = Model.make_model(n_frames,dims,channels)
+    model = mdl.make_model(n_frames,dims,channels)
     model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
     print("11")
     model.train_and_evaluate(gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=-1,verbose=1,epochs=500)
