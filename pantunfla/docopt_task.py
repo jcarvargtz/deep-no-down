@@ -40,9 +40,9 @@ if __name__ == '__main__':
     except:
         print("la neta no valedor")
     print("1")
-    # # # # gpu_devices = tf.config.experimental.list_physical_devices('GPU')
-    # # # # for device in gpu_devices:
-    # # # #     tf.config.experimental.set_memory_growth(device, True)
+    gpu_devices = tf.config.experimental.list_physical_devices('GPU')
+    for device in gpu_devices:
+        tf.config.experimental.set_memory_growth(device, True)
     # Assign model variables to commandline arguments
     print("2")
     # command = "curl 'https://storage.googleapis.com/kaggle-competitions-detached-data/16880/dfdc_train_all.zip?GoogleAccessId=web-data@kaggle-161607.iam.gserviceaccount.com&Expires=1585092363&Signature=gq7%2BEEgLvt81v2Y9bLhODt5TAQh3hM4hu6kGFqKFk6lw2y%2B99trbTUhzfNu43ZfvnIYuwRSM%2FoIyIR5i32u76IOeXUvuwIsB8fFDVWEk1A%2B6rgjP2JfMgZXM2IumO26rqI%2BilI1M6hdyBndlnaFLIjYDqOXXngzfKFmOGQg6mVDu7iAgcQuvvQDwRNTxP%2Bitg9Uo2s3KGH9I%2BcbBdKCNSSgAHuUNrP5%2BFZxSqjU1Oe1wvZ1lIqUHo6xabZ4QlAFiSf1YKymD1IKaAYfNNsTjgiUfowBc8pga8qrLv6A0rWDgTQxs0qoITEStGnWohSOQ9XMvW9lHsjoM2c34l1PdqQ%3D%3D' -H 'authority: storage.googleapis.com' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36' -H 'sec-fetch-dest: document' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' -H 'sec-fetch-site: none' -H 'sec-fetch-mode: navigate' -H 'accept-language: en-US,en;q=0.9' -output download/dfdc_train_all.zip --progress-bar  --compressed"
