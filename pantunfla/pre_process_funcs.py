@@ -13,10 +13,10 @@ from pantunfla.blazeface import BlazeFace
 from keras.utils import Sequence
 import pkg_resources
 
-# Setting tf for my gpu
-gpu_devices = tf.config.experimental.list_physical_devices('GPU')
-for device in gpu_devices:
-    tf.config.experimental.set_memory_growth(device, True)
+# # Setting tf for my gpu
+# gpu_devices = tf.config.experimental.list_physical_devices('GPU')
+# for device in gpu_devices:
+#     tf.config.experimental.set_memory_growth(device, True)
 
 # # Data path and check
 # path_to_data = r"D:/Carpetas en escritorio/Kaggle/Deepfake detection/Deepfake-detection/"

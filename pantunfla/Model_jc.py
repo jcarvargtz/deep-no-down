@@ -14,9 +14,9 @@ import pantunfla.pre_process_funcs as funcs
 import tensorflow as tf
 from keras.applications import ResNet152V2, ResNet50
 # Setting tf for my gpu
-gpu_devices = tf.config.experimental.list_physical_devices('GPU')
-for device in gpu_devices:
-    tf.config.experimental.set_memory_growth(device, True)
+# gpu_devices = tf.config.experimental.list_physical_devices('GPU')
+# for device in gpu_devices:
+#     tf.config.experimental.set_memory_growth(device, True)
 
 # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
