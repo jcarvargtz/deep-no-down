@@ -97,8 +97,8 @@ def make_model(n_frames,dims,channels):
     x4 =  concatenate([mod_1.output, mod_2.output, mod_3.output])
     x4 = Dense(24, activation ="relu")(x4)
     x4 = Dense(24, activation ="relu")(x4)
-    x4 = Dense(24, activation ="relu")(x4)
-    x4 = Dense(24, activation ="relu")(x4)
+    # x4 = Dense(24, activation ="relu")(x4)
+    # x4 = Dense(24, activation ="relu")(x4)
     x4 = Dense(1,  activation ="sigmoid")(x4)
     mod_4 = Model(inputs=[mod_1.input,mod_2.input,mod_3.input], outputs=x4)
     return mod_4
