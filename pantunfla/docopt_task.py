@@ -89,8 +89,9 @@ if __name__ == '__main__':
     failed = []
     for video in os.listdir(DEST /"videos"):
         try:
+            print(video)
             dppvm.pre_process_video(video_file_path=DEST /"videos"/video, output_dir=DEST / "captures", dims=dims, channels=channels)
-            os.remove(DEST / "videso"/ video)
+            os.remove(DEST / "videos"/ video)
         except:
             failed.append(video)
     print("9")
