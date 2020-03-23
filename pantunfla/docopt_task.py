@@ -70,7 +70,7 @@ if __name__ == '__main__':
     #     print("se descargo")
     # except:
     #     print("no se descargo ni madres")
-    DATA = Path("download")
+    DATA = Path()
     DEST = dppvm.DEST
     print("6")
     logging.basicConfig(filename='extract.log', level=logging.INFO)

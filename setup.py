@@ -7,7 +7,7 @@ REQUIRED_PACKAGES = ['docopt', 'pandas', 'keras', 'tensorflow','opencv-python','
 
 setup(
     name='pantunfla',
-    version='1.0',
+    version='1.1',
     author = 'Juan Carlos Vargas',
     author_email = 'jcarvargtz@hotmail.com',
     install_requires=REQUIRED_PACKAGES,
