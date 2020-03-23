@@ -52,7 +52,7 @@ if __name__ == '__main__':
     # subprocess.call([dppvm.curl, dppvm.zip_down_dir],shell=True)
     print("3")
     dppvm.DEST = Path("destination_directory")
-    dims = (244,244)
+    dims = (224,224)
     channels = 3
     n_frames = 30
     ppf.frames_per_video = n_frames
