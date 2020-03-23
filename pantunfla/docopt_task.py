@@ -73,14 +73,14 @@ if __name__ == '__main__':
     DATA = Path()
     DEST = dppvm.DEST
     print("6")
-    logging.basicConfig(filename='extract.log', level=logging.INFO)
-    zipfiles = sorted(list(DATA.glob('dfdc_train_part_*.zip')), key=lambda x: x.stem)
+    # logging.basicConfig(filename='extract.log', level=logging.INFO)
+    # zipfiles = sorted(list(DATA.glob('dfdc_train_part_*.zip')), key=lambda x: x.stem)
     # Extract the zip files
     print("7")
-    start = int(time.time())
-    with multiprocessing.Pool() as pool: # use all cores available
-        pool.map(dppvm.extract_zip, zipfiles)
-    logging.info(f"Extracted all zip files in {int(time.time()) - start} seconds!")
+    # start = int(time.time())
+    # with multiprocessing.Pool() as pool: # use all cores available
+    #     pool.map(dppvm.extract_zip, zipfiles)
+    # logging.info(f"Extracted all zip files in {int(time.time()) - start} seconds!")
     print("8")       
     try:
         os.mkdir(DEST/"captures")
@@ -90,13 +90,24 @@ if __name__ == '__main__':
     for video in os.listdir(DEST /"videos"):
         try:
             dppvm.pre_process_video(video_file_path=DEST /"videos"/video, output_dir=DEST / "captures", dims=dims, channels=channels)
-            os.remove(video)
+            os.remove(DEST / "videso"/ video)
         except:
             failed.append(video)
     print("9")
     path_video_files = dppvm.DEST/'videos'
     path_meta = dppvm.DEST/'metadata'/'all_meta.json'
-    all_meta = pd.read_json(path_meta).T
+    for meta in os.listdir(DEST /"metadata"):
+        if Path(DEST/'metadata'/'all_meta.json').is_file() == False:
+            df_meta = pd.read_json(DEST /"metadata"/meta).T
+            df_meta['zip_no'] = meta
+            all_meta_df = df_meta.copy()
+            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+        else:
+            df_meta = pd.read_json().T
+            df_meta['zip_no'] = DEST /"metadata"/meta
+            all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.json')
+            all_meta = pd.concat([all_meta_df,df_meta],axis=0)
+            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
     all_meta["path"] = path_video_files + r'/' + all_meta.index
     # Train the model
     print("10")
