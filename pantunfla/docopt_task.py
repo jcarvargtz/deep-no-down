@@ -98,25 +98,26 @@ if __name__ == '__main__':
     print("9")
     path_video_files = dppvm.DEST/'videos'
     path_meta = DEST/'metadata'/'all_meta.json'
-    for meta in os.listdir(DEST /"metadata"):
-        if Path(DEST/'metadata'/'all_meta.json').is_file() == False:
-            df_meta = pd.read_json(DEST /"metadata"/meta)
-            df_meta['zip_no'] = meta
-            all_meta = df_meta.copy()
-            all_meta.to_json(DEST/'metadata'/'all_meta.json')
-            print("all")
-        else:
-            df_meta = pd.read_json(DEST /"metadata"/meta)
-            df_meta['zip_no'] = str(DEST /"metadata"/meta)
-            # all_meta_df = pd.read_csv(DEST/'metadata'/'all_meta.json')
-            all_meta = all_meta.append(df_meta)
-            print(meta)
-    print("9.5")
-    all_meta["path"] = all_meta.index.map(lambda x: str(DEST/'videos/') +"/"+ str(x))
-    all_meta.to_json(DEST/'metadata'/'all_meta.json')
-    # all_meta["path"] = [DEST/'metadata'/x for x in all_meta.index]
-    # all_meta = pd.read_json(DEST/'metadata'/"all_meta.json")
-    # Train the model
+    # for meta in os.listdir(DEST /"metadata"):
+    #     if Path(DEST/'metadata'/'all_meta.json').is_file() == False:
+    #         df_meta = pd.read_json(DEST /"metadata"/meta)
+    #         df_meta['zip_no'] = meta
+    #         all_meta = df_meta.copy()
+    #         all_meta.to_json(DEST/'metadata'/'all_meta.json')
+    #         print("all")
+    #     else:
+    #         df_meta = pd.read_json(DEST /"metadata"/meta)
+    #         df_meta['zip_no'] = str(DEST /"metadata"/meta)
+    #         # all_meta_df = pd.read_csv(DEST/'metadata'/'all_meta.json')
+    #         all_meta = all_meta.append(df_meta)
+    #         print(meta)
+    # print("9.5")
+    # all_meta["path"] = all_meta.index.map(lambda x: str(DEST/'videos/') +"/"+ str(x))
+    # all_meta.to_json(DEST/'metadata'/'all_meta.json')
+    # # all_meta["path"] = [DEST/'metadata'/x for x in all_meta.index]
+    # # all_meta = pd.read_json(DEST/'metadata'/"all_meta.json")
+    # # Train the model
+    all_meta = pd.read_json(path_meta)
     print("10")
     val_msk = int(len(all_meta) * 0.9)
     gener = ppf.DataGenerator(all_meta[:val_msk].index,video_path=all_meta[:val_msk].path,meta=all_meta[:val_msk])
