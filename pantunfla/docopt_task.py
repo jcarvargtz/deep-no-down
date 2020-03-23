@@ -59,12 +59,12 @@ if __name__ == '__main__':
     ppf.frames_per_video = n_frames
     print("4")
     saved_model_path = "weights-improvement-{epoch:02d}-{val_accuracy:.2f}.hdf5"
-    checkpoint = ModelCheckpoint(saved_model_path, monitor="val_accuracy",verbose=1,save_best_only=True)
-    earlystop = EarlyStopping(monitor= "val_accuracy", min_delta = 0.01, patience = 5, restore_best_weights=True)
+    checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_accuracy",verbose=1,save_best_only=True)
+    earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_accuracy", min_delta = 0.01, patience = 5, restore_best_weights=True)
     callbacks_list = [checkpoint, earlystop]
-    optimizer = Adam()
-    binloss = BinaryCrossentropy()
-    acc = Accuracy()
+    optimizer = tf.keras.optimizers.Adam()
+    binloss = tf.keras.losses.BinaryCrossentropy()
+    acc = tf.keras.metrics.Accuracy()
     print("5")
     # # # Run the training job
     # try:
