@@ -125,6 +125,7 @@ if __name__ == '__main__':
     val = ppf.DataGenerator(all_meta[val_msk:].index,video_path=all_meta[val_msk:],meta=all_meta[val_msk:])
     model = mdl.make_model(n_frames,dims,channels)
     model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
+    model.summary()
     print("11")
     model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=-1,verbose=2,epochs=500)
     model.fit

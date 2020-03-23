@@ -925,7 +925,7 @@ class DataGenerator(Sequence):
         list_IDs_temp = [self.list_IDs[k] for k in indexes]
         
         # Generate data
-        X1, X2, X3 = self._generate_X(list_IDs_temp)
+        X1, X2 = self._generate_X(list_IDs_temp)#, X3
         X = [X1,X2]#,X3]
     
         if self.to_fit:
