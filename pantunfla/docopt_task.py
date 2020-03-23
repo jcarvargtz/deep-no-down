@@ -106,6 +106,6 @@ if __name__ == '__main__':
     model = Model.make_model(n_frames,dims,channels)
     model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
     print("11")
-    Model.train_and_evaluate(gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=-1,verbose=1,epochs=500)
+    model.train_and_evaluate(gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=-1,verbose=1,epochs=500)
 
     # Make_predicctions
