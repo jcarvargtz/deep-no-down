@@ -126,6 +126,6 @@ if __name__ == '__main__':
     model = mdl.make_model(n_frames,dims,channels)
     model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
     print("11")
-    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=False,workers=-1,verbose=2,epochs=500)
-    
+    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=False,workers=1,verbose=2,epochs=500)
+    model.fit
     # Make_predicctions
