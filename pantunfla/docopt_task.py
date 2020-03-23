@@ -82,19 +82,19 @@ if __name__ == '__main__':
     #     pool.map(dppvm.extract_zip, zipfiles)
     # logging.info(f"Extracted all zip files in {int(time.time()) - start} seconds!")
     print("8")       
-    try:
-        os.mkdir(DEST/"captures")
-    except:
-        pass
-    failed = []
-    for video in os.listdir(DEST /"videos"):
-        try:
-            print(video)
-            dppvm.pre_process_video(video_file_path=DEST /"videos"/video, output_dir=DEST / "captures", dims=dims, channels=channels)
-            os.remove(DEST / "videos"/ video)
-        except:
-            print("no")
-            failed.append(video)
+    # try:
+    #     os.mkdir(DEST/"captures")
+    # except:
+    #     pass
+    # failed = []
+    # for video in os.listdir(DEST /"videos"):
+    #     try:
+    #         print(video)
+    #         dppvm.pre_process_video(video_file_path=DEST /"videos"/video, output_dir=DEST / "captures", dims=dims, channels=channels)
+    #         os.remove(DEST / "videos"/ video)
+    #     except:
+    #         print("no")
+    #         failed.append(video)
     print("9")
     path_video_files = dppvm.DEST/'videos'
     path_meta = dppvm.DEST/'metadata'/'all_meta.json'
@@ -110,7 +110,7 @@ if __name__ == '__main__':
             all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.json')
             all_meta = pd.concat([all_meta_df,df_meta],axis=0)
             all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
-    all_meta["path"] = path_video_files + r'/' + all_meta.index
+    all_meta["path"] = [path_video_files + r'/' + x for x in all_meta.index]
     # Train the model
     print("10")
     val_msk = int(len(all_meta) * 0.9)
