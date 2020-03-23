@@ -97,29 +97,25 @@ if __name__ == '__main__':
     #         failed.append(video)
     print("9")
     path_video_files = dppvm.DEST/'videos'
-    path_meta = dppvm.DEST/'metadata'/'all_meta.json'
+    path_meta = DEST/'metadata'/'all_meta.json'
     for meta in os.listdir(DEST /"metadata"):
         if Path(DEST/'metadata'/'all_meta.json').is_file() == False:
             df_meta = pd.read_json(DEST /"metadata"/meta)
             df_meta['zip_no'] = meta
-            df_meta["id"] = df_meta.index
-            all_meta_df = df_meta.copy()
-            all_meta_df.reset_index(inplace=True)
-            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+            all_meta = df_meta.copy()
+            all_meta.to_json(DEST/'metadata'/'all_meta.json')
             print("all")
         else:
             df_meta = pd.read_json(DEST /"metadata"/meta)
             df_meta['zip_no'] = str(DEST /"metadata"/meta)
-            df_meta.reset_index(inplace=True)
             # all_meta_df = pd.read_csv(DEST/'metadata'/'all_meta.json')
-            all_meta_df.append(df_meta,ignore_index=True)
-            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+            all_meta = all_meta.append(df_meta)
             print(meta)
-    all_meta_df["path"] = all_meta_df.index.apply(lambda x: DEST/'video'/x)
-    all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+    print("9.5")
+    all_meta["path"] = all_meta.index.map(lambda x: str(DEST/'videos/') +"/"+ str(x))
+    all_meta.to_json(DEST/'metadata'/'all_meta.json')
     # all_meta["path"] = [DEST/'metadata'/x for x in all_meta.index]
-    all_meta = pd.read_json(DEST/'metadata'/"all_meta.json")
-    all_meta.set
+    # all_meta = pd.read_json(DEST/'metadata'/"all_meta.json")
     # Train the model
     print("10")
     val_msk = int(len(all_meta) * 0.9)
