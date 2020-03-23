@@ -93,6 +93,7 @@ if __name__ == '__main__':
             dppvm.pre_process_video(video_file_path=DEST /"videos"/video, output_dir=DEST / "captures", dims=dims, channels=channels)
             os.remove(DEST / "videos"/ video)
         except:
+            print("no")
             failed.append(video)
     print("9")
     path_video_files = dppvm.DEST/'videos'
@@ -104,7 +105,7 @@ if __name__ == '__main__':
             all_meta_df = df_meta.copy()
             all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
         else:
-            df_meta = pd.read_json().T
+            df_meta = pd.read_json(DEST /"metadata"/meta).T
             df_meta['zip_no'] = DEST /"metadata"/meta
             all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.json')
             all_meta = pd.concat([all_meta_df,df_meta],axis=0)
