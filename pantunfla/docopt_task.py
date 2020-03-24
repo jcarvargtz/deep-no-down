@@ -59,12 +59,6 @@ if __name__ == '__main__':
     ppf.frames_per_video = n_frames
     print("4")
     saved_model_path = "weights-improvement-{epoch:02d}-{val_accuracy:.2f}.hdf5"
-    checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_accuracy",verbose=1,save_best_only=True)
-    earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_accuracy", min_delta = 0.01, patience = 5, restore_best_weights=True)
-    callbacks_list = [checkpoint, earlystop]
-    optimizer = tf.keras.optimizers.Adam()
-    binloss = tf.keras.losses.BinaryCrossentropy()
-    acc = tf.keras.metrics.Accuracy()
     print("5")
     # # # Run the training job
     # try:
@@ -122,15 +116,21 @@ if __name__ == '__main__':
     all_meta = pd.read_json(path_meta)
     print("10")
     val_msk = int(len(all_meta) * 0.9)
-    gener = ppf.DataGenerator(all_meta[:val_msk].index,video_path=all_meta[:val_msk].path,meta=all_meta[:val_msk])
-    val = ppf.DataGenerator(all_meta[val_msk:].index,video_path=all_meta[val_msk:],meta=all_meta[val_msk:])
     mirrored_strategy = tf.distribute.MirroredStrategy()
     with mirrored_strategy.scope():
+        checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_accuracy",verbose=1,save_best_only=True)
+        earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_accuracy", min_delta = 0.01, patience = 5, restore_best_weights=True)
+        callbacks_list = [checkpoint, earlystop]
+        optimizer = tf.keras.optimizers.Adam()
+        binloss = tf.keras.losses.BinaryCrossentropy()
+        acc = tf.keras.metrics.Accuracy()
+        gener = ppf.DataGenerator(all_meta[:val_msk].index,video_path=all_meta[:val_msk].path,meta=all_meta[:val_msk])
+        val = ppf.DataGenerator(all_meta[val_msk:].index,video_path=all_meta[val_msk:],meta=all_meta[val_msk:])
         model =  model = mdl.make_model(n_frames,dims,channels)
-    # model = tf.keras.utils.multi_gpu_model(model,2)
-    model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
+        # model = tf.keras.utils.multi_gpu_model(model,2)
+        model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
     model.summary()
     print("11")
-    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=-1,verbose=2,epochs=500)
-    model.fit
+    model.fit(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=-1,verbose=2,epochs=500)
+
     # Make_predicctions

@@ -57,7 +57,7 @@ def make_model(n_frames,dims,channels):
     x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="1.3b")(x1)
     x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.MaxPool2D(),name="1.3m")(x1)
     x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.Flatten())(x1)
-    x1 = tf.keras.layers.LSTM(4,name="1.lstm")(x1)
+    x1 = tf.keras.layers.LSTM(2,name="1.lstm")(x1)
     x1 = tf.keras.layers.BatchNormalization(name="1.lstmb")(x1)
     mod_1 = tf.keras.models.Model(inputs=input_1, outputs = x1)
 
@@ -73,7 +73,7 @@ def make_model(n_frames,dims,channels):
     x2 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="2.3b")(x2)
     x2 = tf.keras.layers.TimeDistributed(tf.keras.layers.MaxPool2D(),name="2.3m")(x2)
     x2 = tf.keras.layers.TimeDistributed(tf.keras.layers.Flatten())(x2)
-    x2 = tf.keras.layers.LSTM(4,name="2.lstm")(x2)
+    x2 = tf.keras.layers.LSTM(2,name="2.lstm")(x2)
     x2 = tf.keras.layers.BatchNormalization(name="2.lstmb")(x2)
     mod_2 = tf.keras.models.Model(inputs=input_2, outputs = x2)
 
@@ -95,6 +95,8 @@ def make_model(n_frames,dims,channels):
 
     # Join parts 1,2,3 of model
     x4 =  tf.keras.layers.concatenate([mod_1.output, mod_2.output])#, mod_3.output
+    x4 = tf.keras.layers.Dense(24, activation ="relu")(x4)
+    x4 = tf.keras.layers.Dense(24, activation ="relu")(x4)
     x4 = tf.keras.layers.Dense(24, activation ="relu")(x4)
     x4 = tf.keras.layers.Dense(24, activation ="relu")(x4)
     # x4 = Dense(24, activation ="relu")(x4)
