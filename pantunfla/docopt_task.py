@@ -115,8 +115,8 @@ if __name__ == '__main__':
     # # Train the model
     all_meta = pd.read_json(path_meta)
     print("10")
-    # val_msk = int(len(all_meta) * 0.9)
-    # val = ppf.DataGenerator(all_meta[val_msk:].index,video_path=all_meta[val_msk:],meta=all_meta[val_msk:])
+    val_msk = int(len(all_meta) * 0.9)
+    
     mirrored_strategy = tf.distribute.MirroredStrategy()
     with mirrored_strategy.scope():
         checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_accuracy",verbose=1,save_best_only=True)
@@ -125,13 +125,14 @@ if __name__ == '__main__':
         optimizer = tf.keras.optimizers.Adam()
         binloss = tf.keras.losses.BinaryCrossentropy()
         acc = tf.keras.metrics.Accuracy()
-        # gener = ppf.DataGenerator(all_meta[:val_msk].index,video_path=all_meta[:val_msk].path,meta=all_meta[:val_msk])
-        gener = ppf.DataGenerator(all_meta.index,video_path=all_meta.path,meta=all_meta)
+        val = ppf.DataGenerator(all_meta[val_msk:].index,video_path=all_meta[val_msk:],meta=all_meta[val_msk:])
+        gener = ppf.DataGenerator(all_meta[:val_msk].index,video_path=all_meta[:val_msk].path,meta=all_meta[:val_msk])
+        # gener = ppf.DataGenerator(all_meta.index,video_path=all_meta.path,meta=all_meta)
         model =  model = mdl.make_model(n_frames,dims,channels)
         # model = tf.keras.utils.multi_gpu_model(model,2)
         model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
     model.summary()
     print("11")
-    model.fit(x = gener,callbacks=callbacks_list,validation_split=0.1,use_multiprocessing=True,workers=-1,verbose=2,epochs=500)
+    model.fit(x = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=-1,verbose=2,epochs=500)
 
     # Make_predicctions
