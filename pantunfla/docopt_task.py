@@ -132,6 +132,6 @@ if __name__ == '__main__':
         model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
     model.summary()
     print("11")
-    model.fit(x = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=-1,verbose=2,epochs=500)
+    model.fit(x = gener,callbacks=callbacks_list,validation_split=0.1,use_multiprocessing=True,workers=-1,verbose=2,epochs=500)
 
     # Make_predicctions
