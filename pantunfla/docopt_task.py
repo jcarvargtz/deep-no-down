@@ -119,8 +119,8 @@ if __name__ == '__main__':
     
     mirrored_strategy = tf.distribute.MirroredStrategy()
     with mirrored_strategy.scope():
-        checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_accuracy",verbose=1,save_best_only=True)
-        earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_accuracy", min_delta = 0.01, patience = 5, restore_best_weights=True)
+        checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_acc",verbose=1,save_best_only=True)
+        earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_acc", min_delta = 0.01, patience = 5, restore_best_weights=True)
         callbacks_list = [checkpoint, earlystop]
         optimizer = tf.keras.optimizers.Adam()
         binloss = tf.keras.losses.BinaryCrossentropy()
