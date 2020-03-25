@@ -153,7 +153,7 @@ def make_model(n_frames,dims,channels):
 
 
 
-make_model(30,(224,224),3).summary()
+# make_model(30,(224,224),3).summary()
 
 
 
