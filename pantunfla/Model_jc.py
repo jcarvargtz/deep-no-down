@@ -13,6 +13,7 @@ from keras.optimizers import Adam
 import pantunfla.pre_process_funcs as funcs
 import tensorflow as tf
 from keras.applications import ResNet152V2, ResNet50
+tf.compat.v1.disable_eager_execution()
 # Setting tf for my gpu
 # gpu_devices = tf.config.experimental.list_physical_devices('GPU')
 # for device in gpu_devices:
