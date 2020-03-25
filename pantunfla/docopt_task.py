@@ -30,8 +30,8 @@ from keras.applications import ResNet152V2, ResNet50
 import time
 import multiprocessing
 from keras.utils import multi_gpu_model
-
-
+import gc
+gc.enable()
 
 print("0.0")
 if __name__ == '__main__':

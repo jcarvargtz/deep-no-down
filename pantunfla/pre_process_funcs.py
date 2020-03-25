@@ -12,6 +12,7 @@ import sys
 from pantunfla.blazeface import BlazeFace
 from keras.utils import Sequence
 import pkg_resources
+import gc
 
 # # Setting tf for my gpu
 # gpu_devices = tf.config.experimental.list_physical_devices('GPU')
@@ -880,7 +881,8 @@ def Process_video(video_file_path, n_frames, dims, channels):
     X_2 = X[1]
     # X_3 = X[2]
     return X_1, X_2 #, X_3
-    del faces
+    gc.collect()
+
 
 
 class DataGenerator(tf.keras.utils.Sequence):
