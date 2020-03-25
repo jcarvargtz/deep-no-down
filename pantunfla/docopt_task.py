@@ -119,9 +119,9 @@ if __name__ == '__main__':
     
     # mirrored_strategy = tf.distribute.MirroredStrategy()
     # with mirrored_strategy.scope():
-    checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_acc",verbose=1,save_best_only=True)
+    # checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_acc",verbose=1,save_best_only=True)
     earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_acc", min_delta = 0.01, patience = 5, restore_best_weights=True)
-    callbacks_list = [checkpoint, earlystop]
+    callbacks_list = [earlystop]#,checkpoint
     optimizer = tf.keras.optimizers.Adam()
     binloss = tf.keras.losses.BinaryCrossentropy()
     acc = tf.keras.metrics.Accuracy()
@@ -134,6 +134,6 @@ if __name__ == '__main__':
 
     model.summary()
     print("11")
-    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=12,verbose=2,epochs=500) #,max_queue_size=10)
+    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=50,verbose=2,epochs=500) #,max_queue_size=10)
 
     # Make_predicctions
