@@ -203,6 +203,7 @@ class VideoReader:
             if self.verbose:
                 print("Error retrieving frame %d from movie %s" % (frame_idx, path))
             return None
+            capture.release()
         else:
             frame = self._postprocess_frame(frame)
             return np.expand_dims(frame, axis=0), [frame_idx]
