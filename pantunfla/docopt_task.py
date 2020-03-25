@@ -134,6 +134,6 @@ if __name__ == '__main__':
 
     model.summary()
     print("11")
-    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=9,verbose=2,epochs=500) #,max_queue_size=10)
+    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=12,verbose=2,epochs=500) #,max_queue_size=10)
 
     # Make_predicctions
