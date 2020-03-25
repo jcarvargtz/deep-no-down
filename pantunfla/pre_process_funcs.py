@@ -1045,6 +1045,7 @@ class Data_generator_train(tf.keras.utils.Sequence):
         self.indexes = np.arange(len(self.list_IDs))
         if self.shuffle == True:
             np.random.shuffle(self.indexes)
+        gc.collect()
 
     def __getitem__(self, index):
         'Generate one batch of data'
