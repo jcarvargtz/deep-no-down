@@ -58,7 +58,7 @@ if __name__ == '__main__':
     n_frames = 30
     ppf.frames_per_video = n_frames
     print("4")
-    saved_model_path = "weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
+    saved_model_path = "weights-improvement-{epoch:02d}.hdf5"
     print("5")
     # # # Run the training job
     # try:
