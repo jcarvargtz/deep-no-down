@@ -839,49 +839,49 @@ def count_faces(videos):
         n_faces = face_extractor.video_faces_count(videos)
     return n_faces
 
-def Process_video(video_file_path, n_frames, dims, channels):
-    # def Process_video(video_file_path, n_frames, dims, channels):
-    size = dims[0]
-    # Generate data
-    temp_1 = np.empty([n_frames, *dims, channels],dtype=int)
-    temp_2 = np.empty([n_frames, *dims, channels],dtype=int)
-    # temp_3 = np.empty([n_frames, *dims, channels],dtype=int)
-    # Store sample
-    faces = face_extractor.process_multy_faces_video(video_file_path)
-    len(faces[0]["faces"])
-    for frame in range(len(faces)):
-        if len(faces[frame]["faces"]) > 0 :
-            face_1 = faces[frame]["faces"][0]
-            iso_1 = isotropically_resize_image(face_1,size)
-            square_1 = make_square_image(iso_1)
-            temp_1[frame,] = square_1
-            if len(faces[frame]["faces"]) > 1:
-                face_2 = faces[frame]["faces"][1]
-                iso_2 = isotropically_resize_image(face_2,size)
-                square_2 = make_square_image(iso_2)
-                temp_2[frame,] = square_2
-                # if len(faces[frame]["faces"])>2:
-                #     face_3 = faces[frame]["faces"][2]
-                #     iso_3 = isotropically_resize_image(face_3,size)
-                #     square_3 = make_square_image(iso_3)
-                #     temp_3[frame,] = square_3
-                # else: 
-                #     temp_3[frame,] = np.zeros([*dims,channels])
-            else:
-                temp_2[frame,] = np.zeros([*dims,channels])
-                # temp_3[frame,] = np.zeros([*dims,channels])
-        else:
-            temp_1[frame,] = np.zeros([*dims,channels])
-            temp_2[frame,] = np.zeros([*dims,channels])
-            # temp_3[frame,] = np.zeros([*dims,channels])
+# def Process_video(video_file_path, n_frames, dims, channels):
+#     # def Process_video(video_file_path, n_frames, dims, channels):
+#     size = dims[0]
+#     # Generate data
+#     temp_1 = np.empty([n_frames, *dims, channels],dtype=int)
+#     temp_2 = np.empty([n_frames, *dims, channels],dtype=int)
+#     # temp_3 = np.empty([n_frames, *dims, channels],dtype=int)
+#     # Store sample
+#     faces = face_extractor.process_multy_faces_video(video_file_path)
+#     len(faces[0]["faces"])
+#     for frame in range(len(faces)):
+#         if len(faces[frame]["faces"]) > 0 :
+#             face_1 = faces[frame]["faces"][0]
+#             iso_1 = isotropically_resize_image(face_1,size)
+#             square_1 = make_square_image(iso_1)
+#             temp_1[frame,] = square_1
+#             if len(faces[frame]["faces"]) > 1:
+#                 face_2 = faces[frame]["faces"][1]
+#                 iso_2 = isotropically_resize_image(face_2,size)
+#                 square_2 = make_square_image(iso_2)
+#                 temp_2[frame,] = square_2
+#                 # if len(faces[frame]["faces"])>2:
+#                 #     face_3 = faces[frame]["faces"][2]
+#                 #     iso_3 = isotropically_resize_image(face_3,size)
+#                 #     square_3 = make_square_image(iso_3)
+#                 #     temp_3[frame,] = square_3
+#                 # else: 
+#                 #     temp_3[frame,] = np.zeros([*dims,channels])
+#             else:
+#                 temp_2[frame,] = np.zeros([*dims,channels])
+#                 # temp_3[frame,] = np.zeros([*dims,channels])
+#         else:
+#             temp_1[frame,] = np.zeros([*dims,channels])
+#             temp_2[frame,] = np.zeros([*dims,channels])
+#             # temp_3[frame,] = np.zeros([*dims,channels])
 
-    X = [temp_1, temp_2] #, temp_3]
-    np.random.shuffle(X)
-    X_1 = X[0]
-    X_2 = X[1]
-    # X_3 = X[2]
-    return X_1, X_2 #, X_3
-    gc.collect()
+#     X = [temp_1, temp_2] #, temp_3]
+#     np.random.shuffle(X)
+#     X_1 = X[0]
+#     X_2 = X[1]
+#     # X_3 = X[2]
+#     return X_1, X_2 #, X_3
+#     gc.collect()
 
 
 
@@ -937,6 +937,49 @@ class DataGenerator(tf.keras.utils.Sequence):
         else:
             return X
 
+    def Process_video(self,video_file_path, n_frames, dims, channels):
+        # def Process_video(video_file_path, n_frames, dims, channels):
+        size = dims[0]
+        # Generate data
+        temp_1 = np.empty([n_frames, *dims, channels],dtype=int)
+        temp_2 = np.empty([n_frames, *dims, channels],dtype=int)
+        # temp_3 = np.empty([n_frames, *dims, channels],dtype=int)
+        # Store sample
+        faces = face_extractor.process_multy_faces_video(video_file_path)
+        len(faces[0]["faces"])
+        for frame in range(len(faces)):
+            if len(faces[frame]["faces"]) > 0 :
+                face_1 = faces[frame]["faces"][0]
+                iso_1 = isotropically_resize_image(face_1,size)
+                square_1 = make_square_image(iso_1)
+                temp_1[frame,] = square_1
+                if len(faces[frame]["faces"]) > 1:
+                    face_2 = faces[frame]["faces"][1]
+                    iso_2 = isotropically_resize_image(face_2,size)
+                    square_2 = make_square_image(iso_2)
+                    temp_2[frame,] = square_2
+                    # if len(faces[frame]["faces"])>2:
+                    #     face_3 = faces[frame]["faces"][2]
+                    #     iso_3 = isotropically_resize_image(face_3,size)
+                    #     square_3 = make_square_image(iso_3)
+                    #     temp_3[frame,] = square_3
+                    # else: 
+                    #     temp_3[frame,] = np.zeros([*dims,channels])
+                else:
+                    temp_2[frame,] = np.zeros([*dims,channels])
+                    # temp_3[frame,] = np.zeros([*dims,channels])
+            else:
+                temp_1[frame,] = np.zeros([*dims,channels])
+                temp_2[frame,] = np.zeros([*dims,channels])
+                # temp_3[frame,] = np.zeros([*dims,channels])
+
+        X = [temp_1, temp_2] #, temp_3]
+        np.random.shuffle(X)
+        X_1 = X[0]
+        X_2 = X[1]
+        # X_3 = X[2]
+        return X_1, X_2 #, X_3
+
     def _generate_X(self, list_IDs_temp):
         'Generates data containing batch_size images'
         # Initialization
@@ -946,7 +989,7 @@ class DataGenerator(tf.keras.utils.Sequence):
         size = self.dim[0]
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
-            temp_1,temp_2 = Process_video(self.meta.loc[ID].path, self.n_frames,self.dim,self.n_channels)#,temp_3
+            temp_1,temp_2 = self.Process_video(self.meta.loc[ID].path, self.n_frames,self.dim,self.n_channels)#,temp_3
         
             X = [temp_1,temp_2]#,temp_3]
             np.random.shuffle(X)
@@ -973,7 +1016,7 @@ class Data_generator_train(tf.keras.utils.Sequence):
     'Generates data for Keras'
     def __init__(self, list_IDs, path_to_videos_dir, meta, video_reader=VideoReader(),
     to_fit=True, batch_size=32, dim=(224, 224),
-    n_channels=3,n_frames=30, n_classes=2, shuffle=True, seed=42):
+    n_channels=3,n_frames=30, n_classes=2, shuffle=True, seed=42    ):
         'Initialization'
         self.seed = seed
         np.random.seed(self.seed)
