@@ -889,7 +889,7 @@ def count_faces(videos):
 class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
     def __init__(self, list_IDs, video_path, meta, video_reader=VideoReader(),
-    to_fit=True, batch_size=5, dim=(224, 224),
+    to_fit=True, batch_size=10, dim=(224, 224),
     n_channels=3,n_frames=30, n_classes=2, shuffle=True, seed=42):
         'Initialization'
         self.seed = seed
