@@ -25,6 +25,16 @@ if __name__ == "__main__":
     import gc
     from pathlib import Path
     from PIL import Image
+    import multiprocessing
+
+    DEST = Path('destination_directory')
+    try:
+        os.mkdir(DEST/"captures")
+    except:
+        pass
+
+    Capt = DEST /"captures" 
+
 
     # Check torch 
     print("PyTorch version:", torch.__version__)
@@ -816,7 +826,9 @@ if __name__ == "__main__":
             n_faces = face_extractor.video_faces_count(videos)
         return n_faces
 
-    def process_video(video_file_path, output_path , n_frames, dims, channels):
+    def process_video(video, n_frames=30, dims=(224,224), channels=3):
+        video_file_path = DEST/"videos"/video
+        output_path=  Capt/video
         try:
             output = Path(output_path)
             os.mkdir(output)
@@ -853,14 +865,18 @@ if __name__ == "__main__":
                 im_2.save(output/"face_2"/+"{}.jpeg".format(frame))
                 # temp_3[frame,] = np.zeros([*dims,channels])
 
-    DEST = Path('destination_directory')
+    print("si")    
     path_meta = DEST/'metadata'/'all_meta.json'
     all_meta = pd.read_json(path_meta)
-    Capt = DEST /"captures"
+    vids = all_meta.index.tolist()
+    print("si si")
     try:
         os.mkdir(DEST/"captures")
     except:
         pass
 
-    for video, row in all_meta.iterrows():
-        process_video(DEST/"videos"/video, Capt/video,30,(224,224),3)
+    print("ya casi")
+    with multiprocessing.Pool() as pool: # use all cores available
+        pool.map(process_video, vids)
+
+    print("a pinches huevo!")
