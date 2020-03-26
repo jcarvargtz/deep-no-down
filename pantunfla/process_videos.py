@@ -840,7 +840,7 @@ if __name__ == "__main__":
         # Generate data
         faces = face_extractor.process_multy_faces_video(video_file_path)
         len(faces[0]["faces"])
-        for frame in range(len(faces)):
+        for frame in range(30):
             if len(faces[frame]["faces"]) == 1 :
                 face_1 = faces[frame]["faces"]
                 iso_1 = isotropically_resize_image(face_1,size)
