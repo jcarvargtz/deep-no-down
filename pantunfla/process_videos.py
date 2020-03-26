@@ -841,7 +841,6 @@ if __name__ == "__main__":
         size = dims[0]
         # Generate data
         faces = face_extractor.process_multy_faces_video(video_file_path)
-        len(faces[0]["faces"])
         for frame in range(30):
             try:
                 print("len faces = {}".format(len(faces[frame]["faces"])))
