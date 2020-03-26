@@ -847,7 +847,7 @@ if __name__ == "__main__":
         for frame in range(30):
             try:
                 if len(faces[frame]["faces"]) == 1 :
-                    print("vid:{}, frame: {} face: 1, len faces: {}, shape: {}".format(video, frame,len(faces[frame]["faces"]), np.shape(faces[frame]["faces"][0])))
+                    print("vid: {}, frame: {} face: 1, len faces: {}, shape: {}".format(video, frame, len(faces[frame]["faces"]), np.shape(faces[frame]["faces"][0])))
                     face_1 = faces[frame]["faces"][0]
                     iso_1 = isotropically_resize_image(face_1,size)
                     square_1 = make_square_image(iso_1)
@@ -856,24 +856,24 @@ if __name__ == "__main__":
 
                     im_2 = Image.new('RGB', dims)
                     im_2.save(output/"face_2/{}.jpeg".format(frame))
-                    print("vid: {}, frame:{}, sucess".format(video,frame))
+                    print("vid: {}, frame:{}, sucess".format(video, frame))
 
                 elif len(faces[frame]["faces"]) > 1:
-                    print("vid: {}, frame: {} face:1 len faces: {}, shape: {}".format(video,frame,len(faces[frame]["faces"]), np.shape(faces[frame]["faces"][0])))
-                    print("vid: {}, frame: {} face:2 len faces: {}, shape: {}".format(video,frame,len(faces[frame]["faces"]), np.shape(faces[frame]["faces"][1])))
+                    print("vid: {}, frame: {} face:1 len faces: {}, shape: {}".format(video, frame, len(faces[frame]["faces"]), np.shape(faces[frame]["faces"][0])))
+                    print("vid: {}, frame: {} face:2 len faces: {}, shape: {}".format(video, frame, len(faces[frame]["faces"]), np.shape(faces[frame]["faces"][1])))
                     face_1 = faces[frame]["faces"][0]
                     iso_1 = isotropically_resize_image(face_1,size)
                     square_1 = make_square_image(iso_1)
                     im_1 = Image.fromarray(square_1)
                     im_1.save(output/"face_1/{}.jpeg".format(frame))
-                    print("vid: {}, frame:{}, sucess".format(video,frame))
+                    print("vid: {}, frame: {}, sucess".format(video,frame))
 
                     face_2 = faces[frame]["faces"][1]
                     iso_2 = isotropically_resize_image(face_2,size)
                     square_2 = make_square_image(iso_2)
                     im_2 = Image.fromarray(square_2)
                     im_2.save(output/"face_2/{}.jpeg".format(frame))
-                    print("vid: {}, frame:{}, sucess".format(video,frame))
+                    print("vid: {}, frame: {}, sucess".format(video, frame))
                 # else:
                 #     im_2 = Image.fromarray(np.zeros([*dims,channels]))
                 #     im_2.save(output/"face_2/{}.jpeg".format(frame))
@@ -882,14 +882,14 @@ if __name__ == "__main__":
                     
                     im_1 = Image.new('RGB', dims)
                     im_1.save(output/"face_1/{}.jpeg".format(frame))
-                    print("vid: {}, frame:{}, fail".format(video,frame))
+                    print("vid: {}, frame:{}, fail".format(video, frame))
 
                     im_2 = Image.new('RGB', dims)
                     im_2.save(output/"face_2/{}.jpeg".format(frame))
-                    print("vid: {}, frame:{}, fail".format(video,frame))
+                    print("vid: {}, frame:{}, fail".format(video, frame))
                     # temp_3[frame,] = np.zeros([*dims,channels])
             except:
-                print()
+                print("video: {}, frame :{} ¡no Face!".format(video,frame))
                 im_1 = Image.new('RGB', dims)
                 im_1.save(output/"face_1/{}.jpeg".format(frame))
 
