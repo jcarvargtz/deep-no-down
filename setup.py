@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-REQUIRED_PACKAGES = ['docopt', 'pandas', 'keras', 'tensorflow','opencv-python','tqdm','pathlib','torch','torchvision']
+REQUIRED_PACKAGES = ['docopt', 'pandas', 'keras', 'tensorflow','opencv-python','tqdm','pathlib','torch','torchvision','Pillow']
 
 
 setup(

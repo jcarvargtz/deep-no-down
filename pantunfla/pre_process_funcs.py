@@ -25,7 +25,7 @@ import gc
 # test_videos = sorted([x for x in os.listdir(test_dir) if x[-4:] == ".mp4"])
 # len(test_videos)
 
-# Check torch 
+# Check torch
 print("PyTorch version:", torch.__version__)
 print("CUDA version:", torch.version.cuda)
 print("cuDNN version:", torch.backends.cudnn.version())
