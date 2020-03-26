@@ -7,24 +7,25 @@ Options:
 """
 from docopt import docopt
 
-import os
-import pandas as pd
-import numpy as np
-import torch
-from torchvision.transforms import Normalize
-import cv2
-import matplotlib.pyplot as plt
-from tqdm import tqdm
-import tensorflow as tf
-import sys
-from pantunfla.blazeface import BlazeFace
-from keras.utils import Sequence
-import pkg_resources
-import gc
-from pathlib import Path
-from PIL import Image
 
 if __name__ == "__main__":
+    import os
+    import pandas as pd
+    import numpy as np
+    import torch
+    from torchvision.transforms import Normalize
+    import cv2
+    import matplotlib.pyplot as plt
+    from tqdm import tqdm
+    import tensorflow as tf
+    import sys
+    from pantunfla.blazeface import BlazeFace
+    from keras.utils import Sequence
+    import pkg_resources
+    import gc
+    from pathlib import Path
+    from PIL import Image
+
     # Check torch 
     print("PyTorch version:", torch.__version__)
     print("CUDA version:", torch.version.cuda)
