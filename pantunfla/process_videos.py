@@ -842,7 +842,7 @@ if __name__ == "__main__":
         len(faces[0]["faces"])
         for frame in range(30):
             try:
-                print(np.shape(faces[frame]["faces"][0,]))
+                print(np.shape(faces[frame]["faces"][0]))
                 if len(faces[frame]["faces"]) == 1 :
                     face_1 = faces[frame]["faces"][0,]
                     iso_1 = isotropically_resize_image(face_1,size)
