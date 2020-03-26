@@ -883,6 +883,7 @@ if __name__ == "__main__":
     for video in vids:
         try:
             process_video(video)
+            print(video)
         except:
             failed.append(video)
 
