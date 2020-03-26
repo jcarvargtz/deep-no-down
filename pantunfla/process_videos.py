@@ -880,12 +880,13 @@ if __name__ == "__main__":
         # pool.map(process_video, vids)
 
     failed=[]
-    for video in vids:
+    for vid in vids:
         try:
-            process_video(video)
-            print(video)
+            print(vid)
+            process_video(vid)
+            print(vid)
         except:
-            failed.append(video)
+            failed.append(vid)
 
     print("el numero de videos que valieron verga fue {}".format(len(failed)))
     print("a pinches huevo!")
