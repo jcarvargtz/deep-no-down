@@ -876,7 +876,15 @@ if __name__ == "__main__":
         pass
 
     print("ya casi")
-    with multiprocessing.Pool() as pool: # use all cores available
-        pool.map(process_video, vids)
+    # with multiprocessing.Pool() as pool: # use all cores available
+        # pool.map(process_video, vids)
 
+    failed=[]
+    for video in vids:
+        try:
+            process_video(video)
+        except:
+            failed.append(video)
+
+    print("el numero de videos que valieron verga fue {}".format(len(failed)))
     print("a pinches huevo!")
