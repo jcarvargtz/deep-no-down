@@ -27,6 +27,8 @@ if __name__ == "__main__":
     from PIL import Image
     import multiprocessing
 
+    np.random.seed(42)
+
     DEST = Path('destination_directory')
     try:
         os.mkdir(DEST/"captures")
@@ -842,7 +844,7 @@ if __name__ == "__main__":
         len(faces[0]["faces"])
         for frame in range(30):
             try:
-                print(len(faces[frame]["faces"]))
+                print("len faces = {}".format(len(faces[frame]["faces"])))
                 print(np.shape(faces[frame]["faces"][0]))
                 if len(faces[frame]["faces"]) == 1 :
                     face_1 = faces[frame]["faces"][0]
@@ -873,10 +875,10 @@ if __name__ == "__main__":
                 #     # temp_3[frame,] = np.zeros([*dims,channels])
                 else:
                     
-                    im_1 = Image.fromarray(np.zeros([*dims,channels]))
+                    im_1 = Image.fromarray(np.ones([*dims,channels]))
                     im_1.save(output/"face_1/{}.jpeg".format(frame))
 
-                    im_2 = Image.fromarray(np.zeros([*dims,channels]))
+                    im_2 = Image.fromarray(np.ones([*dims,channels]))
                     im_2.save(output/"face_2/{}.jpeg".format(frame))
                     # temp_3[frame,] = np.zeros([*dims,channels])
             except:
