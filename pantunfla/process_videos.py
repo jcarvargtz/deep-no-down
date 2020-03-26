@@ -235,6 +235,13 @@ if __name__ == "__main__":
             return frame
 
 
+    # Setting  video reader and face extractor
+    frames_per_video = 30
+    video_reader = VideoReader()
+    video_read_fn = lambda x: video_reader.read_random_frames(x, num_frames=frames_per_video)
+    face_extractor = FaceExtractor(video_read_fn, facedet)
+    input_size = 224
+
     class FaceExtractor:
         """Wrapper for face extraction workflow."""
         
@@ -783,12 +790,7 @@ if __name__ == "__main__":
             return self.count_faces(input_dir, filenames, [0])
 
 
-    # Setting  video reader and face extractor
-    frames_per_video = 30
-    video_reader = VideoReader()
-    video_read_fn = lambda x: video_reader.read_frames(x, num_frames=frames_per_video)
-    face_extractor = FaceExtractor(video_read_fn, facedet)
-    input_size = 224
+
 
     # Create functions for resizing the images 
     def isotropically_resize_image(img, size, resample=cv2.INTER_AREA):
@@ -904,7 +906,8 @@ if __name__ == "__main__":
         try:
             pool.map(process_video, vids)
         except:
-            continue
+            pass
+
 
     # failed=[]
     # for vid in vids:
