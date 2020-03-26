@@ -898,9 +898,13 @@ if __name__ == "__main__":
     except:
         pass
 
+    failed = []
     print("ya casi")
     with multiprocessing.Pool() as pool: # use all cores available
-        pool.map(process_video, vids)
+        try:
+            pool.map(process_video, vids)
+        except:
+            continue
 
     # failed=[]
     # for vid in vids:
