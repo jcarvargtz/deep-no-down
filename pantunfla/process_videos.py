@@ -841,23 +841,32 @@ if __name__ == "__main__":
         faces = face_extractor.process_multy_faces_video(video_file_path)
         len(faces[0]["faces"])
         for frame in range(len(faces)):
-            if len(faces[frame]["faces"]) > 0 :
+            if len(faces[frame]["faces"]) == 1 :
+                face_1 = faces[frame]["faces"]
+                iso_1 = isotropically_resize_image(face_1,size)
+                square_1 = make_square_image(iso_1)
+                im_1 = Image.fromarray(square_1)
+                im_1.save(output/"face_1/{}.jpeg".format(frame))
+
+                im_2 = Image.fromarray(np.zeros([*dims,channels]))
+                im_2.save(output/"face_2/{}.jpeg".format(frame))
+
+            elif len(faces[frame]["faces"]) > 1:
                 face_1 = faces[frame]["faces"][0]
                 iso_1 = isotropically_resize_image(face_1,size)
                 square_1 = make_square_image(iso_1)
                 im_1 = Image.fromarray(square_1)
                 im_1.save(output/"face_1/{}.jpeg".format(frame))
 
-                if len(faces[frame]["faces"]) > 1:
-                    face_2 = faces[frame]["faces"][1]
-                    iso_2 = isotropically_resize_image(face_2,size)
-                    square_2 = make_square_image(iso_2)
-                    im_2 = Image.fromarray(square_2)
-                    im_2.save(output/"face_2/{}.jpeg".format(frame))
-                else:
-                    im_2 = Image.fromarray(np.zeros([*dims,channels]))
-                    im_2.save(output/"face_2/{}.jpeg".format(frame))
-                    # temp_3[frame,] = np.zeros([*dims,channels])
+                face_2 = faces[frame]["faces"][1]
+                iso_2 = isotropically_resize_image(face_2,size)
+                square_2 = make_square_image(iso_2)
+                im_2 = Image.fromarray(square_2)
+                im_2.save(output/"face_2/{}.jpeg".format(frame))
+            # else:
+            #     im_2 = Image.fromarray(np.zeros([*dims,channels]))
+            #     im_2.save(output/"face_2/{}.jpeg".format(frame))
+            #     # temp_3[frame,] = np.zeros([*dims,channels])
             else:
                 im_1 = Image.fromarray(np.zeros([*dims,channels]))
                 im_1.save(output/"face_1/{}.jpeg".format(frame))
