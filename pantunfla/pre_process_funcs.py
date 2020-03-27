@@ -48,8 +48,8 @@ class DataGenerator(tf.keras.utils.Sequence):
         list_IDs_temp = [self.list_IDs[k] for k in indexes]
 
         # Generate data
-        X1, X2 = self._generate_X(list_IDs_temp)#, X3
-        X = [X1,X2]#,X3]
+        X = self._generate_X(list_IDs_temp)#1, X2 #, X3
+        # X = [X1,X2]#,X3]
     
         if self.to_fit:
             y = self._generate_y(list_IDs_temp)
@@ -60,8 +60,8 @@ class DataGenerator(tf.keras.utils.Sequence):
     def _generate_X(self, list_IDs_temp):
         'Generates data containing batch_size images'
         # Initialization
-        X1 = np.empty((self.batch_size,self.n_frames, *self.dim, self.n_channels),dtype=int)
-        X2 = np.empty((self.batch_size,self.n_frames, *self.dim, self.n_channels),dtype=int)
+        # X1 = np.empty((self.batch_size,self.n_frames, *self.dim, self.n_channels),dtype=int)
+        # X2 = np.empty((self.batch_size,self.n_frames, *self.dim, self.n_channels),dtype=int)
         # X3 = np.empty((self.batch_size,self.n_frames, *self.dim, self.n_channels),dtype=int)
         size = self.dim[0]
         
@@ -80,11 +80,11 @@ class DataGenerator(tf.keras.utils.Sequence):
 
             X = [temp_1,temp_2]#,temp_3]
             np.random.shuffle(X)
-            X1[i,] = X[0]
-            X2[i,] = X[1]
+            # X1[i,] = X[0]
+            # X2[i,] = X[1]
             # X3[i,] = X[2]
 
-        return X1,X2#,X3
+        return X#1,X2#,X3
  
     def _generate_y(self, list_IDs_temp):
         'Generates data containing batch_size masks'
