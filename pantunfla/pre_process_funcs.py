@@ -46,7 +46,8 @@ class DataGenerator(tf.keras.utils.Sequence):
         
         # Find list of IDs
         list_IDs_temp = [self.list_IDs[k] for k in indexes]
-        print(list_IDs_temp)
+        for i in enumerate(list_IDs_temp):
+            print(i)
         # Generate data
         X1, X2 = self._generate_X(list_IDs_temp)#, X3
         X = [X1,X2]#,X3]
