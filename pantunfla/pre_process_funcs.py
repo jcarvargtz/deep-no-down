@@ -73,10 +73,10 @@ class DataGenerator(tf.keras.utils.Sequence):
             temp_2 = np.empty((self.batch_size,self.n_frames,*self.dim,self.n_channels))
             for j in os.listdir(captures_path/"face_1"):
                 im = Image.open(captures_path/"face_1"/j)
-                temp_1[i,j,] = np.asarray(im)
+                temp_1[i,j,] = np.asarray(im,dtype=int)
             for k in os.listdir(captures_path/"face_2"):
                 im = Image.open(captures_path/"face_2"/k)
-                temp_2[i,k,] =np.asarray(im)
+                temp_2[i,k,] =np.asarray(im,dtype=int)
 
             X = [temp_1,temp_2]#,temp_3]
             np.random.shuffle(X)
