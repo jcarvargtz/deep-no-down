@@ -77,8 +77,8 @@ if __name__ == '__main__':
     acc = tf.keras.metrics.Accuracy()
 
     val_msk = int(len(all_meta) * 0.9)
-    val   = ppf.DataGenerator(all_meta[val_msk:].index, videos_folder_path=DEST/"captures",meta=all_meta[val_msk:])
-    gener = ppf.DataGenerator(all_meta[:val_msk].index,videos_folder_path=DEST/"captures",meta=all_meta[:val_msk])
+    val   = ppf.DataGenerator(all_meta[val_msk:].index, DEST/"captures", meta=all_meta[val_msk:])
+    gener = ppf.DataGenerator(all_meta[:val_msk].index, DEST/"captures", meta=all_meta[:val_msk])
     # gener = ppf.DataGenerator(all_meta.index,video_path=all_meta.path,meta=all_meta)
     model =  model = mdl.make_model(n_frames,dims,channels)
     # model = tf.keras.utils.multi_gpu_model(model,2)
