@@ -20,6 +20,7 @@ import time
 import multiprocessing
 from keras.utils import multi_gpu_model
 import gc
+from tqdm import tqdm
 gc.enable()
 
 print("0.0")
@@ -53,7 +54,7 @@ if __name__ == '__main__':
     print("10")
     
     all_meta["good"] = False
-    for folder in os.listdir(DEST/"captures"):
+    for folder in tqdm(os.listdir(DEST/"captures")):
         p1 = DEST/"captures"/folder/"face_1"
         p2 = DEST/"captures"/folder/"face_2"
         if p1.exists() and p2.exists() and len(os.listdir(p1))==30 and len(os.listdir(p1))==30:

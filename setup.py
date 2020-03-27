@@ -2,12 +2,12 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-REQUIRED_PACKAGES = ['docopt', 'pandas', 'keras', 'tensorflow','opencv-python','tqdm','pathlib','torch','torchvision','Pillow']
+REQUIRED_PACKAGES = ['docopt', 'pandas', 'keras', 'tensorflow','opencv-python','tqdm','pathlib','torch','torchvision','Pillow','tqdm']
 
 
 setup(
     name='pantunfla',
-    version='666.666.666',
+    version='6667.666.666',
     author = 'Juan Carlos Vargas',
     author_email = 'jcarvargtz@hotmail.com',
     install_requires=REQUIRED_PACKAGES,
