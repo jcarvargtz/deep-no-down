@@ -18,7 +18,7 @@ class DataGenerator(tf.keras.utils.Sequence):
         self.meta = meta
         self.labels = self.meta.label
         self.video_path = Path(videos_foler_path)
-        self.video_names = meta.index.tolist()
+        self.video_names = self.meta.index.tolist()
         self.to_fit = to_fit
         self.batch_size = batch_size
         self.n_frames = n_frames
