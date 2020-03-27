@@ -70,24 +70,26 @@ if __name__ == '__main__':
     
     
     # # # # # # # # # # # # uncomment to train
-    earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_acc", min_delta = 0.01, patience = 5, restore_best_weights=True)
-    callbacks_list = [earlystop]#,checkpoint
-    optimizer = tf.keras.optimizers.Adam()
-    binloss = tf.keras.losses.BinaryCrossentropy()
-    acc = tf.keras.metrics.Accuracy()
+    mirrored_strategy = tf.distribute.MirroredStrategy()
+    with mirrored_strategy.scope():
+        earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_acc", min_delta = 0.01, patience = 5, restore_best_weights=True)
+        callbacks_list = [earlystop]#,checkpoint
+        optimizer = tf.keras.optimizers.Adam()
+        binloss = tf.keras.losses.BinaryCrossentropy()
+        acc = tf.keras.metrics.Accuracy()
 
-    val_msk = int(len(all_meta) * 0.9)
-    val   = ppf.DataGenerator(list(all_meta[val_msk:].index), DEST/"captures", meta=all_meta[val_msk:])
-    gener = ppf.DataGenerator(list(all_meta[:val_msk].index), DEST/"captures", meta=all_meta[:val_msk])
-    # gener = ppf.DataGenerator(all_meta.index,video_path=all_meta.path,meta=all_meta)
-    model =  model = mdl.make_model(n_frames,dims,channels)
-    # model = tf.keras.utils.multi_gpu_model(model,2)
-    model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
+        val_msk = int(len(all_meta) * 0.9)
+        val   = ppf.DataGenerator(list(all_meta[val_msk:].index), DEST/"captures", meta=all_meta[val_msk:])
+        gener = ppf.DataGenerator(list(all_meta[:val_msk].index), DEST/"captures", meta=all_meta[:val_msk])
+        # gener = ppf.DataGenerator(all_meta.index,video_path=all_meta.path,meta=all_meta)
+        model = mdl.make_model(n_frames,dims,channels)
+        # model = tf.keras.utils.multi_gpu_model(model,2)
+        model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
 
     
     print("11")
     print("Ahí les va!")
-    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=100,verbose=2,epochs=500,max_queue_size=50)
+    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,verbose=2,epochs=500)#, use_multiprocessing=True,workers=100,max_queue_size=50)
 
     # # Make_predicctions
 
