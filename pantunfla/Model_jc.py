@@ -1,19 +1,19 @@
-import pandas as pd
-import numpy as np
-from keras.models import Model, Sequential
-from keras.layers import Dense, Conv2D, LSTM, Dropout, AveragePooling2D
-from keras.layers import Flatten, BatchNormalization, Convolution2D,Input
-from keras. layers import TimeDistributed, Reshape, concatenate
-from keras.layers import Activation, MaxPool2D
-import os
-from keras.callbacks import ModelCheckpoint, EarlyStopping, History
-from keras.losses import BinaryCrossentropy
-from keras.metrics import Accuracy
-from keras.optimizers import Adam
-import pantunfla.pre_process_funcs as funcs
-import tensorflow as tf
-from keras.applications import ResNet152V2, ResNet50
-tf.compat.v1.disable_eager_execution()
+# import pandas as pd
+# import numpy as np
+# from keras.models import Model, Sequential
+# from keras.layers import Dense, Conv2D, LSTM, Dropout, AveragePooling2D
+# from keras.layers import Flatten, BatchNormalization, Convolution2D,Input
+# from keras. layers import TimeDistributed, Reshape, concatenate
+# from keras.layers import Activation, MaxPool2D
+# import os
+# from keras.callbacks import ModelCheckpoint, EarlyStopping, History
+# from keras.losses import BinaryCrossentropy
+# from keras.metrics import Accuracy
+# from keras.optimizers import Adam
+# import pantunfla.pre_process_funcs as funcs
+# import tensorflow as tf
+# from keras.applications import ResNet152V2, ResNet50
+# tf.compat.v1.disable_eager_execution()
 # Setting tf for my gpu
 # gpu_devices = tf.config.experimental.list_physical_devices('GPU')
 # for device in gpu_devices:
@@ -39,24 +39,28 @@ tf.compat.v1.disable_eager_execution()
 # n_frames = 30
 
 
-# # # # # # # Create Model # # # # # #
-# Create inputs
+# # # # # # # # Create Model # # # # # #
+# # Create inputs
 # def make_model(n_frames,dims,channels):
 #     input_1 = tf.keras.layers.Input(shape=[ n_frames, *dims, channels], name="input_1") 
 #     input_2 = tf.keras.layers.Input(shape=[ n_frames, *dims, channels], name="input_2")
 #     # input_3 = Input(shape=[ n_frames, *dims, channels], name="input_3")
 #     # Create first part of the model
-#     # x1 = TimeDistributed(ResNet50())(input_1)
-#     x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.Conv2D(16,kernel_size=(7,7)),name="1.1")(input_1)
-#     x1 = tf.keras.layers.Activation("relu", name="act1.1")(x1)
-#     x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.Conv2D(32,kernel_size=(5,5)),name="1.2")(x1)
-#     x1 = tf.keras.layers.Activation("relu", name="act1.2")(x1)
-#     x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="1.2b")(x1)
-#     x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.Conv2D(64,kernel_size=(3,3)),name="1.3")(x1)
-#     x1 = tf.keras.layers.Activation("relu", name="act1.3")(x1)
-#     x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="1.3b")(x1)
-#     # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.MaxPool2D(),name="1.3m")(x1)
-#     x1 = tf.keras.layers.MaxPool3D()(x1)
+#     cnn_1 = tf.keras.applications.ResNet50(weights='imagenet',include_top=False)
+#     for layer in cnn_1.layers:
+#         layer.trainable = False
+    
+#     x1 = TimeDistributed(cnn_1)(input_1)
+#     # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.Conv2D(16,kernel_size=(7,7)),name="1.1")(input_1)
+#     # x1 = tf.keras.layers.Activation("relu", name="act1.1")(x1)
+#     # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.Conv2D(32,kernel_size=(5,5)),name="1.2")(x1)
+#     # x1 = tf.keras.layers.Activation("relu", name="act1.2")(x1)
+#     # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="1.2b")(x1)
+#     # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.Conv2D(64,kernel_size=(3,3)),name="1.3")(x1)
+#     # x1 = tf.keras.layers.Activation("relu", name="act1.3")(x1)
+#     # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="1.3b")(x1)
+#     # # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.MaxPool2D(),name="1.3m")(x1)
+#     # x1 = tf.keras.layers.MaxPool3D()(x1)
 #     x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.Flatten())(x1)
 #     # x1 = tf.keras.layers.LSTM(2,name="1.lstm")(x1)
 #     # x1 = tf.keras.layers.BatchNormalization(name="1.lstmb")(x1)
@@ -122,53 +126,50 @@ def make_model(n_frames,dims,channels):
     input_1 = tf.keras.layers.Input(shape=[ n_frames, *dims, channels], name="input_1") 
     input_2 = tf.keras.layers.Input(shape=[ n_frames, *dims, channels], name="input_2")
 
-    x1 = tf.keras.layers.ConvLSTM2D(32,kernel_size=(7,7),name="1.1", return_sequences=True)(input_1)
-    x1 = tf.keras.layers.ConvLSTM2D(64,kernel_size=(5,5),name="1.2")(x1)
-    x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="1.2b")(x1)
-    x1 = tf.keras.layers.Conv2D(128,kernel_size=(3,3),name="1.3")(x1)
-    x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="1.3b")(x1)
-    x1 = tf.keras.layers.MaxPool2D()(x1)
+    cnn_1 = tf.keras.applications.ResNet50(weights="imagenet", include_top=False)
+    for layer in cnn_1.layers:
+        layer.trainable = False
+
+    x1 = tf.keras.layers.TimeDistributed(cnn_1, name = "cnn_1")(input_1)
+    x1 = tf.keras.layers.ConvLSTM2D(32,kernel_size=(2,2),name="1.1", return_sequences=True)(x1)
+    x1 = tf.keras.layers.ConvLSTM2D(64,kernel_size=(3,3),name="1.2", return_sequences=False)(x1)
+    x1 = tf.keras.layers.BatchNormalization()(x1) 
+    # x1 = tf.keras.layers.Flatten()(x1)
+    # x1 = tf.keras.layers.ConvLSTM2D(64,kernel_size=(5,5),name="1.2")(x1)
+    # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="1.2b")(x1)
+    # x1 = tf.keras.layers.Conv2D(128,kernel_size=(3,3),name="1.3")(x1)
+    # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="1.3b")(x1)
+    # x1 = tf.keras.layers.MaxPool2D()(x1)
     # x1 = tf.keras.layers.TimeDistributed(tf.keras.layers.Flatten())(x1)
 
-    x2 = tf.keras.layers.ConvLSTM2D(32,kernel_size=(7,7),name="2.1",return_sequences=True)(input_2)
-    x2 = tf.keras.layers.ConvLSTM2D(64,kernel_size=(5,5),name="2.2")(x2)
-    x2 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="2.2b")(x2)
-    x2 = tf.keras.layers.Conv2D(128,kernel_size=(3,3),name="2.3")(x2)
-    x2 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="2.3b")(x2)
-    x2 = tf.keras.layers.MaxPool2D()(x2)
+    cnn_2 = tf.keras.applications.ResNet50(weights="imagenet", include_top=False)
+    for layer in cnn_2.layers:
+        layer.trainable = False
+
+    x2 = tf.keras.layers.TimeDistributed(cnn_2, name = "cnn_2")(input_2)
+    x2 = tf.keras.layers.ConvLSTM2D(32,kernel_size=(2,2),name="2.1",return_sequences=True)(x2)
+    x2 = tf.keras.layers.ConvLSTM2D(64,kernel_size=(3,3),name="2.2")(x2)
+    x2 = tf.keras.layers.BatchNormalization()(x2)
+
+    # x2 = tf.keras.layers.Conv2D(128,kernel_size=(3,3),name="2.3")(x2)
+    # x2 = tf.keras.layers.TimeDistributed(tf.keras.layers.BatchNormalization(),name="2.3b")(x2)
+    # x2 = tf.keras.layers.MaxPool2D()(x2)
     # x2 = tf.keras.layers.TimeDistributed(tf.keras.layers.Flatten())(x2)
 
     x4 = tf.keras.layers.concatenate(inputs=[x1,x2],axis =-1)
-    x4 = tf.keras.layers.TimeDistributed(tf.keras.layers.Dense(24,activation = "relu"))(x4)
-    x4 = tf.keras.layers.TimeDistributed(tf.keras.layers.Dense(24,activation = "relu"))(x4)
-    x4 = tf.keras.layers.TimeDistributed(tf.keras.layers.Dense(24,activation = "relu"))(x4)
+    x4 = tf.keras.layers.Dense(24,activation = "relu")(x4)
+    x4 = tf.keras.layers.Dense(48,activation = "relu")(x4)
+    x4 = tf.keras.layers.Dense(96,activation = "relu")(x4)
     x4 = tf.keras.layers.MaxPool2D()(x4)
     # x4 = tf.keras.layers.LSTM(1,name="lstm")(x4)
     x4 = tf.keras.layers.Flatten()(x4)
+    x4 = tf.keras.layers.Dense(192,activation="relu")(x4)
+    x4 = tf.keras.layers.Dense(384,activation="relu")(x4)
     x4 = tf.keras.layers.Dense(1,activation="sigmoid")(x4)
 
     mod_4 = tf.keras.models.Model(inputs=[input_1,input_2], outputs=x4)
+
     return mod_4
-
-
-
-
-
-# make_model(30,(224,224),3).summary()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # # Create callbacks, metrics, loss, and Generator # #
