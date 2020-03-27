@@ -50,42 +50,44 @@ if __name__ == '__main__':
     print("9")
     path_video_files = dppvm.DEST/'videos'
     path_meta = DEST/'metadata'/'all_meta.json'
-    all_meta = pd.read_json(path_meta)
+    meta = pd.read_json(path_meta)
+    all_meta = meta[meta["good"]].copy()
     print("10")
-    
-    all_meta["good"] = False
-    for folder in tqdm(os.listdir(DEST/"captures")):
-        p1 = DEST/"captures"/folder/"face_1"
-        p2 = DEST/"captures"/folder/"face_2"
-        if p1.exists() and p2.exists() and len(os.listdir(p1)) > 0 and len(os.listdir(p1)) > 0:
-            all_meta.loc[folder,"good"] = True
-    print("oh yuuuur")
-    all_meta.to_json(path_meta)
-    print("finish")
+
+    # # bla bla mascara para ver ver del df, cuales son los videos que se procesaron    
+    # all_meta["good"] = False
+    # for folder in tqdm(os.listdir(DEST/"captures")):
+    #     p1 = DEST/"captures"/folder/"face_1"
+    #     p2 = DEST/"captures"/folder/"face_2"
+    #     if p1.exists() and p2.exists() and len(os.listdir(p1)) > 0 and len(os.listdir(p1)) > 0:
+    #         all_meta.loc[folder,"good"] = True
+    # print("oh yuuuur")
+    # all_meta.to_json(path_meta)
+    # print("finish")
     # mirrored_strategy = tf.distribute.MirroredStrategy()
     # with mirrored_strategy.scope():
     # checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_acc",verbose=1,save_best_only=True)
     
     
-    # # # # # # # # # # # # # uncomment to train
-    # earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_acc", min_delta = 0.01, patience = 5, restore_best_weights=True)
-    # callbacks_list = [earlystop]#,checkpoint
-    # optimizer = tf.keras.optimizers.Adam()
-    # binloss = tf.keras.losses.BinaryCrossentropy()
-    # acc = tf.keras.metrics.Accuracy()
+    # # # # # # # # # # # # uncomment to train
+    earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_acc", min_delta = 0.01, patience = 5, restore_best_weights=True)
+    callbacks_list = [earlystop]#,checkpoint
+    optimizer = tf.keras.optimizers.Adam()
+    binloss = tf.keras.losses.BinaryCrossentropy()
+    acc = tf.keras.metrics.Accuracy()
 
-    # val_msk = int(len(all_meta) * 0.9)
-    # ppf.DataGenerator()
-    # val   = ppf.DataGenerator(all_meta[val_msk:].index,videos_folder_path=DEST/"captures",meta=all_meta[val_msk:])
-    # gener = ppf.DataGenerator(all_meta[:val_msk].index,videos_folder_path=DEST/"captures",meta=all_meta[:val_msk])
-    # # gener = ppf.DataGenerator(all_meta.index,video_path=all_meta.path,meta=all_meta)
-    # model =  model = mdl.make_model(n_frames,dims,channels)
-    # # model = tf.keras.utils.multi_gpu_model(model,2)
-    # model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
+    val_msk = int(len(all_meta) * 0.9)
+    ppf.DataGenerator()
+    val   = ppf.DataGenerator(all_meta[val_msk:].index,videos_folder_path=DEST/"captures",meta=all_meta[val_msk:])
+    gener = ppf.DataGenerator(all_meta[:val_msk].index,videos_folder_path=DEST/"captures",meta=all_meta[:val_msk])
+    # gener = ppf.DataGenerator(all_meta.index,video_path=all_meta.path,meta=all_meta)
+    model =  model = mdl.make_model(n_frames,dims,channels)
+    # model = tf.keras.utils.multi_gpu_model(model,2)
+    model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
 
-    # model.summary()
-    # print("11")
-    # model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=100,verbose=1,epochs=500,max_queue_size=50)
+    model.summary()
+    print("11")
+    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=100,verbose=1,epochs=500,max_queue_size=50)
 
     # # Make_predicctions
 
