@@ -98,11 +98,3 @@ class DataGenerator(tf.keras.utils.Sequence):
 
         return y
 
-
-temp = np.empty((30,2,1071,857,3),dtype=int)
-im_path = "adq06qssvsd31.jpg"
-im = Image.open(im_path)
-bla = np.asarray(im,dtype=int)
-temp[0,0,] = bla
-bla.shape
-temp[0,0]
