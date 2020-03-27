@@ -67,15 +67,15 @@ class DataGenerator(tf.keras.utils.Sequence):
         
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
-            
+            print(i)
             captures_path = Path(self.video_path / ID)
             temp_1 = np.empty((self.batch_size,self.n_frames,*self.dim,self.n_channels))
             temp_2 = np.empty((self.batch_size,self.n_frames,*self.dim,self.n_channels))
-            for j in os.listdir(captures_path/"face_1"):
-                im = Image.open(captures_path/"face_1"/j)
+            for j, q in enumerate(os.listdir(captures_path/"face_1")):
+                im = Image.open(captures_path/"face_1"/q)
                 temp_1[i,j,] = np.asarray(im,dtype=int)
-            for k in os.listdir(captures_path/"face_2"):
-                im = Image.open(captures_path/"face_2"/k)
+            for k, p in enumerate(os.listdir(captures_path/"face_2")):
+                im = Image.open(captures_path/"face_2"/p)
                 temp_2[i,k,] =np.asarray(im,dtype=int)
 
             X = [temp_1,temp_2]#,temp_3]
@@ -98,3 +98,11 @@ class DataGenerator(tf.keras.utils.Sequence):
 
         return y
 
+
+temp = np.empty((30,2,1071,857,3),dtype=int)
+im_path = "adq06qssvsd31.jpg"
+im = Image.open(im_path)
+bla = np.asarray(im,dtype=int)
+temp[0,0,] = bla
+bla.shape
+temp[0,0]
