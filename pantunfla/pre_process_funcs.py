@@ -46,8 +46,8 @@ class DataGenerator(tf.keras.utils.Sequence):
         
         # Find list of IDs
         list_IDs_temp = [self.list_IDs[k] for k in indexes]
-        for i in enumerate(list_IDs_temp):
-            print(i)
+        for i, ID in enumerate(list_IDs_temp):
+            print("i: {}, ID: {}".format(i,ID))
         # Generate data
         X1, X2 = self._generate_X(list_IDs_temp)#, X3
         X = [X1,X2]#,X3]
@@ -68,7 +68,7 @@ class DataGenerator(tf.keras.utils.Sequence):
         
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
-            print("i: {}, ID: {}".format(i,ID))
+            
             captures_path = Path(self.video_path / self.video_names[ID])
             temp_1 = np.empty((self.batch_size,self.n_frames,*self.dim,self.n_channels))
             temp_2 = np.empty((self.batch_size,self.n_frames,*self.dim,self.n_channels))
