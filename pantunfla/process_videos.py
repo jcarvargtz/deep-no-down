@@ -908,6 +908,8 @@ if __name__ == "__main__":
     except:
         pass
 
+    mask = vids not in os.listdir(DEST/"videos")
+    vids_masked = vids[mask]
     failed = []
     print("ya casi")
     with multiprocessing.Pool() as pool: # use all cores available
