@@ -84,8 +84,9 @@ if __name__ == '__main__':
     # model = tf.keras.utils.multi_gpu_model(model,2)
     model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
 
-    model.summary()
+    
     print("11")
+    print("Ahí les va!")
     model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=100,verbose=1,epochs=500,max_queue_size=50)
 
     # # Make_predicctions
