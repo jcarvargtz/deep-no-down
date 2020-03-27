@@ -908,7 +908,7 @@ if __name__ == "__main__":
     except:
         pass
 
-    mask = vids not in os.listdir(DEST/"videos")
+    mask = os.listdir(DEST/"captures") not in os.listdir(DEST/"videos")
     vids_masked = vids[mask]
     failed = []
     print("ya casi")
