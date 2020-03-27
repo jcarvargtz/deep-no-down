@@ -64,6 +64,7 @@ class DataGenerator(tf.keras.utils.Sequence):
         X2 = np.empty((self.batch_size,self.n_frames, *self.dim, self.n_channels),dtype=int)
         # X3 = np.empty((self.batch_size,self.n_frames, *self.dim, self.n_channels),dtype=int)
         size = self.dim[0]
+        print(list_IDs_temp)
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
             print("i: {}, ID: {}".format(i,ID))
