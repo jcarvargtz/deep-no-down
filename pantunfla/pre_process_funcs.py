@@ -67,7 +67,7 @@ class DataGenerator(tf.keras.utils.Sequence):
         
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
-            print(i)
+
             captures_path = Path(self.video_path / ID)
             temp_1 = np.empty((self.batch_size,self.n_frames,*self.dim,self.n_channels))
             temp_2 = np.empty((self.batch_size,self.n_frames,*self.dim,self.n_channels))

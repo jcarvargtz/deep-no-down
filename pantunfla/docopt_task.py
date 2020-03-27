@@ -87,7 +87,7 @@ if __name__ == '__main__':
     
     print("11")
     print("Ahí les va!")
-    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=100,verbose=1,epochs=500,max_queue_size=50)
+    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,use_multiprocessing=True,workers=100,verbose=2,epochs=500,max_queue_size=50)
 
     # # Make_predicctions
 
