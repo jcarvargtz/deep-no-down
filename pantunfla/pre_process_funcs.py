@@ -7,7 +7,7 @@ from pathlib import Path
 
 class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
-    def __init__(self, list_IDs, videos_foler_path, meta,
+    def __init__(self, list_IDs, videos_folder_path, meta,
                 to_fit=True, batch_size=100, dim=(224, 224),
                 n_channels=3, n_frames=30, n_classes=2,
                 shuffle=True, seed=42):
@@ -17,7 +17,7 @@ class DataGenerator(tf.keras.utils.Sequence):
         self.list_IDs = list_IDs
         self.meta = meta
         self.labels = self.meta.label
-        self.video_path = Path(videos_foler_path)
+        self.video_path = Path(videos_folder_path)
         self.video_names = self.meta.index.tolist()
         self.to_fit = to_fit
         self.batch_size = batch_size
@@ -73,7 +73,7 @@ class DataGenerator(tf.keras.utils.Sequence):
             temp_2 = np.empty((self.batch_size,self.n_frames,*self.dim,self.n_channels))
             for j in os.listdir(captures_path/"face_1"):
                 im = Image.open(captures_path/"face_1"/j)
-                temp_1[i,h,] = np.asarray(im)
+                temp_1[i,j,] = np.asarray(im)
             for k in os.listdir(captures_path/"face_2"):
                 im = Image.open(captures_path/"face_2"/k)
                 temp_2[i,k,] =np.asarray(im)
