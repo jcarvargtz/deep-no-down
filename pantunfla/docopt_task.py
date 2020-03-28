@@ -121,8 +121,8 @@ if __name__ == '__main__':
     
     print("11")
     print("Ahí les va!")
-    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,verbose=1,epochs=500, workers=0)#, workers = 4)#, use_multiprocessing=True,workers=100,max_queue_size=50)
-
+    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,verbose=1,epochs=10, workers=0)#, workers = 4)#, use_multiprocessing=True,workers=100,max_queue_size=50)
+    model.save("fin.h5")
     # # Make_predicctions
 
 
