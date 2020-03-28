@@ -51,6 +51,10 @@ if __name__ == '__main__':
     path_meta = DEST/'metadata'/'all_meta.json'
     meta = pd.read_json(path_meta)
     all_meta = meta[meta["good"]].copy()
+    no_fakes = all_meta[all_meta["label"]=="REAL"]
+    fakes = all_meta[all_meta["label"]=="FAKE"]
+    fakes_down = fakes.sample(frac=.20,axis=0,random_state=42,replace=False)
+    all_meta = pd.concat([fakes_down,no_fakes],axis=0)
 
 
 
