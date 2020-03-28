@@ -26,9 +26,9 @@ gc.enable()
 print("0.0")
 if __name__ == '__main__':
 
-    # gpu_devices = tf.config.experimental.list_physical_devices('GPU')
-    # for device in gpu_devices:
-        # tf.config.experimental.set_memory_growth(device, True)
+    gpu_devices = tf.config.experimental.list_physical_devices('GPU')
+    for device in gpu_devices:
+        tf.config.experimental.set_memory_growth(device, True)
 
     print("0.1")
     try:
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     # with mirrored_strategy.scope():
     earlystop = tf.keras.callbacks.EarlyStopping(monitor= "val_acc", min_delta = 0.01, patience = 5, restore_best_weights=True)
     callbacks_list = [earlystop]#,checkpoint
-    optimizer = tf.keras.optimizers.Adam()
+    optimizer = tf.keras.optimizers.SGD()
     binloss = tf.keras.losses.BinaryCrossentropy()
     acc = tf.keras.metrics.Accuracy()
 
@@ -94,7 +94,7 @@ if __name__ == '__main__':
     
     print("11")
     print("Ahí les va!")
-    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,verbose=2,epochs=500, workers = 4)#, use_multiprocessing=True,workers=100,max_queue_size=50)
+    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,verbose=2,epochs=500)#, workers = 4)#, use_multiprocessing=True,workers=100,max_queue_size=50)
 
     # # Make_predicctions
 
