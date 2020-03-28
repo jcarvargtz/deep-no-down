@@ -8,7 +8,7 @@ from pathlib import Path
 class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
     def __init__(self, list_IDs, videos_folder_path, meta,
-                to_fit=True, batch_size=100, dim=(224, 224),
+                to_fit=True, batch_size=50, dim=(224, 224),
                 n_channels=3, n_frames=30, n_classes=2,
                 shuffle=True, seed=42):
         'Initialization'
