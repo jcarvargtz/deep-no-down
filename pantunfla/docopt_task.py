@@ -74,7 +74,7 @@ if __name__ == '__main__':
     callbacks_list = [earlystop]#,checkpoint
 
     print("2")
-    optimizer = keras.optimizers.SGD()
+    optimizer = tf.keras.optimizers.SGD()
     binloss = keras.losses.BinaryCrossentropy()
     acc = keras.metrics.Accuracy()
 
