@@ -36,29 +36,20 @@ if __name__ == '__main__':
         arguments = docopt(__doc__)
     except:
         print("la neta no valedor")
-    print("1")
-    print("2")
-    print("3")
     dppvm.DEST = Path("destination_directory")
     dims = (224,224)
     channels = 3
     n_frames = 30
     ppf.frames_per_video = n_frames
-    print("4")
     saved_model_path = "weights-improvement-{epoch:02d}.hdf5"
-    print("5")
 
     DATA = Path()
     DEST = dppvm.DEST
-    print("6")
-    print("7")
-    print("8")
-    print("9")
+
     path_video_files = dppvm.DEST/'videos'
     path_meta = DEST/'metadata'/'all_meta.json'
     meta = pd.read_json(path_meta)
     all_meta = meta[meta["good"]].copy()
-    print("10")
 
     # # bla bla mascara para ver ver del df, cuales son los videos que se procesaron    
     # all_meta["good"] = False
@@ -78,18 +69,34 @@ if __name__ == '__main__':
     # # # # # # # # # # # # uncomment to train
     # mirrored_strategy = tf.distribute.MirroredStrategy()
     # with mirrored_strategy.scope():
+    print("1")    
     earlystop = keras.callbacks.EarlyStopping(monitor= "val_acc", min_delta = 0.01, patience = 5, restore_best_weights=True)
     callbacks_list = [earlystop]#,checkpoint
+
+    print("2")
     optimizer = keras.optimizers.SGD()
     binloss = keras.losses.BinaryCrossentropy()
     acc = keras.metrics.Accuracy()
 
+    print("3")
     val_msk = int(len(all_meta) * 0.9)
     val   = ppf.DataGenerator(list(all_meta[val_msk:].index), DEST/"captures", meta=all_meta[val_msk:])
     gener = ppf.DataGenerator(list(all_meta[:val_msk].index), DEST/"captures", meta=all_meta[:val_msk])
-    # gener = ppf.DataGenerator(all_meta.index,video_path=all_meta.path,meta=all_meta)
+
+    print("4")
     model = mdl.make_model(n_frames,dims,channels)
+
+    print("5")
     model = keras.utils.multi_gpu_model(model,2)
+
+    print("6")
+    print("7")
+    print("8")
+    print("9")
+
+    print("10")
+
+    # gener = ppf.DataGenerator(all_meta.index,video_path=all_meta.path,meta=all_meta)
     model.compile(optimizer= optimizer, loss = binloss, metrics = [acc])
 
     
