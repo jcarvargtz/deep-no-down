@@ -87,7 +87,7 @@ if __name__ == '__main__':
     model = mdl.make_model(n_frames,dims,channels)
 
     print("5")
-    model = tf.keras.utils.multi_gpu_model(model,2)
+    # model = tf.keras.utils.multi_gpu_model(model,2)
 
     print("6")
     print("7")
