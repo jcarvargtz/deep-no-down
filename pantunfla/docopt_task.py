@@ -71,7 +71,8 @@ if __name__ == '__main__':
     # with mirrored_strategy.scope():
     print("1")    
     earlystop = keras.callbacks.EarlyStopping(monitor= "val_acc", min_delta = 0.01, patience = 5, restore_best_weights=True)
-    callbacks_list = [earlystop]#,checkpoint
+    checkpoint = keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_acc",verbose=1,save_best_only=True)
+    callbacks_list = [earlystop, checkpoint]#,checkpoint
 
     print("2")
     optimizer = tf.keras.optimizers.SGD()
@@ -102,7 +103,7 @@ if __name__ == '__main__':
     
     print("11")
     print("Ahí les va!")
-    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,verbose=1,epochs=500)#, workers = 4)#, use_multiprocessing=True,workers=100,max_queue_size=50)
+    model.fit_generator(generator = gener,callbacks=callbacks_list,validation_data=val,verbose=1,epochs=500, workers=0)#, workers = 4)#, use_multiprocessing=True,workers=100,max_queue_size=50)
 
     # # Make_predicctions
 
