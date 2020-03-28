@@ -55,23 +55,23 @@ if __name__ == '__main__':
 
 
     # # bla bla mascara para ver ver del df, cuales son los videos que se procesaron    
-    all_meta["good"] = False
-    for folder in tqdm(os.listdir(DEST/"captures")):
-        p1 = DEST/"captures"/folder/"face_1"
-        p2 = DEST/"captures"/folder/"face_2"
-        if p1.exists() and p2.exists():
-            for photo_1 in os.listdir(p1):
-                try: 
-                    im_1 = Image.open(p1/photo_1)
-                except: 
-                    os.remove(p1/photo_1)
-            for photo_2 in os.listdir(p2):
-                try:
-                    im_2 = Image.open(p2/photo_2)
-                except:
-                    os.remove(p2/photo_2)
-            if len(os.listdir(p1)) == 30 and len(os.listdir(p1)) == 30:
-                all_meta.loc[folder,"good"] = True
+    # all_meta["good"] = False
+    # for folder in tqdm(os.listdir(DEST/"captures")):
+    #     p1 = DEST/"captures"/folder/"face_1"
+    #     p2 = DEST/"captures"/folder/"face_2"
+    #     if p1.exists() and p2.exists():
+    #         for photo_1 in os.listdir(p1):
+    #             try: 
+    #                 im_1 = Image.open(p1/photo_1)
+    #             except: 
+    #                 os.remove(p1/photo_1)
+    #         for photo_2 in os.listdir(p2):
+    #             try:
+    #                 im_2 = Image.open(p2/photo_2)
+    #             except:
+    #                 os.remove(p2/photo_2)
+    #         if len(os.listdir(p1)) == 30 and len(os.listdir(p1)) == 30:
+    #             all_meta.loc[folder,"good"] = True
     print("oh yuuuur")
     all_meta.to_json(path_meta)
     print("finish")
