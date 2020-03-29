@@ -47,8 +47,44 @@ if __name__ == '__main__':
     DATA = Path()
     DEST = dppvm.DEST
 
+    for file in tqdm(os.listdir(DEST/"metadata")):
+        if Path(DEST/'metadata'/'all_meta.json').is_file() == False:
+            df_meta = pd.read_json(DEST/"metadata"/file)
+            all_meta_df = df_meta.copy()
+            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+        else:
+            
+            df_meta = pd.read_json(DEST/"metadata"/file).T
+            all_meta_df = pd.read_json(DEST/'metadata'/'all_meta.json')
+            all_meta = pd.concat([all_meta_df,df_meta],axis=0)
+            all_meta_df.to_json(DEST/'metadata'/'all_meta.json')
+
+
     path_video_files = dppvm.DEST/'videos'
     path_meta = DEST/'metadata'/'all_meta.json'
+
+    # # bla bla mascara para ver ver del df, cuales son los videos que se procesaron    
+    all_meta["good"] = False
+    for folder in tqdm(os.listdir(DEST/"captures")):
+        p1 = DEST/"captures"/folder/"face_1"
+        p2 = DEST/"captures"/folder/"face_2"
+        if p1.exists() and p2.exists():
+            for photo_1 in os.listdir(p1):
+                try: 
+                    im_1 = Image.open(p1/photo_1)
+                except: 
+                    os.remove(p1/photo_1)
+            for photo_2 in os.listdir(p2):
+                try:
+                    im_2 = Image.open(p2/photo_2)
+                except:
+                    os.remove(p2/photo_2)
+            if len(os.listdir(p1)) == 30 and len(os.listdir(p1)) == 30:
+                all_meta.loc[folder,"good"] = True
+    print("oh yuuuur")
+    all_meta.to_json(path_meta)
+    print("finish")
+
     meta = pd.read_json(path_meta)
     _meta = meta[meta["good"]].copy()
     no_fakes = _meta[_meta["label"]=="REAL"]
@@ -58,27 +94,7 @@ if __name__ == '__main__':
 
 
 
-    # # bla bla mascara para ver ver del df, cuales son los videos que se procesaron    
-    # all_meta["good"] = False
-    # for folder in tqdm(os.listdir(DEST/"captures")):
-    #     p1 = DEST/"captures"/folder/"face_1"
-    #     p2 = DEST/"captures"/folder/"face_2"
-    #     if p1.exists() and p2.exists():
-    #         for photo_1 in os.listdir(p1):
-    #             try: 
-    #                 im_1 = Image.open(p1/photo_1)
-    #             except: 
-    #                 os.remove(p1/photo_1)
-    #         for photo_2 in os.listdir(p2):
-    #             try:
-    #                 im_2 = Image.open(p2/photo_2)
-    #             except:
-    #                 os.remove(p2/photo_2)
-    #         if len(os.listdir(p1)) == 30 and len(os.listdir(p1)) == 30:
-    #             all_meta.loc[folder,"good"] = True
-    print("oh yuuuur")
-    all_meta.to_json(path_meta)
-    print("finish")
+
     # mirrored_strategy = tf.distribute.MirroredStrategy()
     # with mirrored_strategy.scope():
     # checkpoint = tf.keras.callbacks.ModelCheckpoint(saved_model_path, monitor="val_acc",verbose=1,save_best_only=True)
